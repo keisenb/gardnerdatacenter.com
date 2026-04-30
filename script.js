@@ -14,6 +14,15 @@
   // Titles & descriptions feed .ics + Google Calendar — keep wording specific to this site.
   const MEETINGS = [
     {
+      id: "city-council-may-4",
+      title: "Gardner City Council (regular meeting)",
+      start: "2026-05-04T19:00:00-05:00",
+      durationMinutes: 120,
+      location: "Gardner City Hall, Gardner, KS 66030",
+      description:
+        "Regular City Council meeting. The data center rezoning may or may not be on the agenda; check the official packet before you go. City agendas and minutes: https://www.gardnerkansas.gov/government/city_council/agendas_minutes.php#outer-319",
+    },
+    {
       id: "public-meeting-1",
       title: "Beale public information meeting #1 - Gardner data center proposal",
       start: "2026-05-13T18:00:00-05:00",
@@ -31,6 +40,15 @@
       location: "Virtual (details to be announced)",
       description:
         "Hosted by Beale Infrastructure. Second information session, virtual. Details not yet provided. Q&A at the end. Entry from Say No to the Gardner Data Center; confirm with the host when available.",
+    },
+    {
+      id: "city-council-may-18",
+      title: "Gardner City Council (regular meeting)",
+      start: "2026-05-18T19:00:00-05:00",
+      durationMinutes: 120,
+      location: "Gardner City Hall, Gardner, KS 66030",
+      description:
+        "Regular City Council meeting. The data center rezoning may or may not be on the agenda; check the official packet before you go. City agendas and minutes: https://www.gardnerkansas.gov/government/city_council/agendas_minutes.php",
     },
     {
       id: "planning-commission",
