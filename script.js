@@ -15,43 +15,40 @@
   const MEETINGS = [
     {
       id: "public-meeting-1",
-      title: "Gardner public meeting #1 — proposed data center rezoning",
-      shortTitle: "Public Meeting",
+      title: "Beale public information meeting #1 - Gardner data center proposal",
       start: "2026-05-13T18:00:00-05:00",
       durationMinutes: 90,
-      location: "Gardner City Hall, 120 E. Main St., Gardner, KS 66030",
+      location:
+        "Wheatridge Middle School, Gardner, KS",
       description:
-        "First City-hosted public meeting on the proposed M-1 rezoning for a hyperscale data center near 191st St. & S. Clare Road. This event was added from Say No to the Gardner Data Center (gardnerdatacenter.com) — neighbors sharing public information, not a City posting. Confirm date, time, and room with the Gardner City Clerk before you travel.",
+        "Hosted by Beale Infrastructure. Information on the proposal with Q&A at the end. In person at Wheatridge Middle School. Calendar entry from Say No to the Gardner Data Center (gardnerdatacenter.com) for neighbor planning only; confirm details with the host.",
     },
     {
       id: "public-meeting-2",
-      title: "Gardner public meeting #2 — proposed data center rezoning",
-      shortTitle: "Public Meeting",
+      title: "Beale public information meeting #2 - Gardner data center proposal (virtual)",
       start: "2026-05-15T18:00:00-05:00",
       durationMinutes: 90,
-      location: "Gardner City Hall, 120 E. Main St., Gardner, KS 66030",
+      location: "Virtual (details to be announced)",
       description:
-        "Second City-hosted public meeting on the same proposed rezoning — another chance to attend if you missed May 13. Entry created by Say No to the Gardner Data Center; verify details with the City of Gardner.",
+        "Hosted by Beale Infrastructure. Second information session, virtual. Details not yet provided. Q&A at the end. Entry from Say No to the Gardner Data Center; confirm with the host when available.",
     },
     {
       id: "planning-commission",
-      title: "Gardner Planning Commission — data center rezoning hearing",
-      shortTitle: "Planning Commission",
+      title: "Gardner Planning Commission - data center rezoning hearing",
       start: "2026-05-26T19:00:00-05:00",
       durationMinutes: 120,
-      location: "Gardner City Hall, Council Chambers, 120 E. Main St., Gardner, KS 66030",
+      location: "Gardner City Hall",
       description:
-        "Planning Commission hearing on the rezoning application. Public comment becomes part of the official record. Calendar details from gardnerdatacenter.com (community volunteers). Confirm agenda and location with the City.",
+        "Planning Commission hearing on the rezoning application. Public comment becomes part of the official record. Calendar details from gardnerdatacenter.com (community volunteers). Confirm time and place with the City of Gardner.",
     },
     {
       id: "council-vote",
-      title: "Gardner City Council vote — data center rezoning",
-      shortTitle: "City Council Vote",
+      title: "Gardner City Council vote - data center rezoning",
       start: "2026-06-15T19:00:00-05:00",
       durationMinutes: 120,
-      location: "Gardner City Hall, Council Chambers, 120 E. Main St., Gardner, KS 66030",
+      location: "Gardner City Hall, Gardner, KS 66030",
       description:
-        "City Council vote on the rezoning application — final decision-making meeting. This event listing is from Say No to the Gardner Data Center for neighbor planning only; the City’s agenda is the official source.",
+        "City Council vote on the rezoning application. Final decision-making meeting. Listing from Say No to the Gardner Data Center for neighbor planning only; the City agenda is the official source.",
     },
   ];
 
@@ -81,16 +78,11 @@
     wrap.innerHTML =
       '<span class="urgent-banner-text">' +
       '<span class="urgent-banner-label">Next meeting</span>' +
-      '<span class="urgent-banner-message"><strong>' +
-      escapeHtml(next.shortTitle) +
-      "</strong> — " +
+      '<span class="urgent-banner-message">' +
       escapeHtml(dateStr) +
-      "</span>" +
-      "</span>" +
-      '<span class="urgent-banner-actions">' +
-      '<button type="button" class="urgent-banner-cta" data-ics="' +
-      next.id +
-      '">Add to Calendar</button>' +
+      '</span>' +
+      '<span class="urgent-banner-sep" aria-hidden="true">·</span>' +
+      '<a href="meetings.html#meetings" class="urgent-banner-link">Learn more</a>' +
       "</span>";
     slot.appendChild(wrap);
 
@@ -120,7 +112,7 @@
       timeZone: "America/Chicago",
     };
     try {
-      return new Intl.DateTimeFormat("en-US", opts).format(d) + " CT";
+      return new Intl.DateTimeFormat("en-US", opts).format(d);
     } catch (_e) {
       return d.toLocaleString();
     }
@@ -129,13 +121,13 @@
   function buildCalendarDescription(meeting) {
     return (
       (meeting.description || "").trim() +
-      "\n\n—\n" +
+      "\n\n" +
       SITE.name +
       "\n" +
       SITE.url +
-      "\nTimeline: " +
+      "\nMeetings: " +
       SITE.url +
-      "/timeline.html\nTake action: " +
+      "/meetings\nTake action: " +
       SITE.url +
       "/take-action.html"
     );
@@ -184,7 +176,7 @@
       "SUMMARY:" + icsEscape(meeting.title),
       "LOCATION:" + icsEscape(meeting.location || ""),
       "DESCRIPTION:" + icsEscape(buildCalendarDescription(meeting)),
-      "URL:" + SITE.url + "/timeline.html",
+      "URL:" + SITE.url + "/meetings",
       "END:VEVENT",
       "END:VCALENDAR",
     ];
@@ -254,7 +246,7 @@
   }
 
   // Expose meetings + ICS helper for any page that wants to use them
-  // (e.g., the timeline page wires per-item "Add to calendar" links).
+  // (e.g., the meetings page wires per-item calendar links).
   window.__SITE_DATA__ = {
     meetings: MEETINGS,
     site: SITE,
@@ -263,35 +255,19 @@
     buildCalendarDescription: buildCalendarDescription,
   };
 
-  // =========================================================
-  // Sticky "Take Action Now" CTA
-  // =========================================================
-  function buildStickyCta() {
-    if (document.body.classList.contains("is-take-action")) return;
-    if (document.querySelector(".sticky-cta")) return;
-    const a = document.createElement("a");
-    a.href = "take-action.html";
-    a.className = "sticky-cta";
-    a.setAttribute("aria-label", "Take action now on the Gardner data center");
-    a.textContent = "Take Action Now";
-    document.body.appendChild(a);
-  }
-
   // Run chrome immediately so it appears as soon as DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
       buildBanner();
-      buildStickyCta();
       wireIcsAndGcalLinks();
     });
   } else {
     buildBanner();
-    buildStickyCta();
     wireIcsAndGcalLinks();
   }
 
   // =========================================================
-  // Existing nav, share, year, signup, copy template behavior
+  // Existing nav, share, signup, copy template behavior
   // =========================================================
 
   const navToggle = document.getElementById("navToggle");
@@ -302,6 +278,7 @@
       navToggle.setAttribute("aria-expanded", String(open));
       navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       primaryNav.classList.toggle("open", open);
+      document.body.classList.toggle("nav-open", open);
     };
 
     navToggle.addEventListener("click", () => {
@@ -374,13 +351,6 @@
     }, 1800);
   }
 
-  // Footer year
-  const yearEls = document.querySelectorAll("#year");
-  yearEls.forEach((el) => {
-    el.textContent = String(new Date().getFullYear());
-  });
-
-  // Per-representative mailto enhancement -------------------
   // Each <a class="rep-mailto"> starts with a plain mailto:email href
   // (so right-click → copy email, and JS-disabled users still get a
   // working email link). On load, JS rewrites the href to add a

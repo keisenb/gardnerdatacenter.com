@@ -13,7 +13,7 @@ Intentionally simple — no build step, no framework, no dependencies.
 - Statically hosted on **Vercel** (free tier)
 - Source on **GitHub**
 
-That's it. The whole site is three files plus this README.
+That's it. The site is plain HTML pages plus shared CSS/JS.
 
 ## Local development
 
@@ -34,9 +34,8 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ```
 .
 ├── index.html              # Home — overview + CTAs into deeper pages
-├── whats-proposed.html     # What's actually being proposed (specifics)
-├── concerns.html           # Detailed impact concerns (water, power, noise, ...)
-├── timeline.html           # Key public meeting dates with .ics download
+├── the-proposal.html       # The proposal + sourced "What's at stake" impacts
+├── meetings.html           # Public meetings list with .ics / Google Calendar links
 ├── myths.html              # Myths & facts
 ├── take-action.html        # Three steps: sign petition, email reps, attend meeting
 ├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
@@ -63,7 +62,7 @@ The **next-meeting banner** and **sticky "Take Action" CTA** are injected by `sc
 All meetings live in a single `MEETINGS` array near the top of `script.js`. Each entry needs an `id`, `title`, `start` (ISO 8601 with timezone), `durationMinutes`, `location`, and `description`. Adding or moving a meeting:
 
 1. Edit the `MEETINGS` array in `script.js`.
-2. (Optional) Reflect the change on `timeline.html`, which renders timeline entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Add to calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
+2. (Optional) Reflect the change on `meetings.html`, which renders meeting entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Apple Calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
 
 The top banner automatically picks the soonest upcoming meeting.
 
@@ -92,7 +91,7 @@ vercel --prod # production deploy
 All copy lives in `index.html` and is grouped by `<section>`. To update:
 
 - **Headlines / hero copy** — search for `class="hero"`.
-- **Concerns** — search for `id="concerns"`. Each concern is a `<article class="concern-card">`.
+- **The Proposal** — `the-proposal.html`: project summary, reality checks, and impact deep-dives (`id="impacts"`, articles like `id="power"`).
 - **Myths vs Facts** — search for `id="facts"`. Each row is a `<article class="myth-card">`.
 - **Resources** — search for `id="resources"`. Each link is a `<a class="resource-card">`.
 - **Take Action** — search for `id="action"`.
