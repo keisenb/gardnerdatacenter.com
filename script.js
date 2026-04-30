@@ -82,6 +82,99 @@
   }
 
   // Footer year
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+  const yearEls = document.querySelectorAll("#year");
+  yearEls.forEach((el) => {
+    el.textContent = String(new Date().getFullYear());
+  });
+
+  // Email signup form (Formspree-compatible) ----------------
+  const signupForm = document.getElementById("signupForm");
+  const signupStatus = document.getElementById("signupStatus");
+
+  if (signupForm && signupStatus) {
+    signupForm.addEventListener("submit", async (e) => {
+      const action = signupForm.getAttribute("action") || "";
+
+      // If the form action hasn't been configured yet, don't submit a broken request.
+      if (!action || action.includes("REPLACE_WITH_FORM_ID")) {
+        e.preventDefault();
+        signupStatus.textContent =
+          "Thanks! The signup form isn't connected yet — please check back soon.";
+        signupStatus.className = "form-status";
+        return;
+      }
+
+      e.preventDefault();
+      const formData = new FormData(signupForm);
+      const submitBtn = signupForm.querySelector(".form-submit");
+      const originalLabel = submitBtn ? submitBtn.textContent : "";
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Sending...";
+        }
+        signupStatus.textContent = "";
+        signupStatus.className = "form-status";
+
+        const response = await fetch(action, {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          signupStatus.textContent =
+            "You're on the list. Watch your inbox for updates.";
+          signupStatus.className = "form-status is-success";
+          signupForm.reset();
+        } else {
+          const data = await response.json().catch(() => ({}));
+          const msg =
+            (data && data.errors && data.errors[0] && data.errors[0].message) ||
+            "Something went wrong. Please try again.";
+          signupStatus.textContent = msg;
+          signupStatus.className = "form-status is-error";
+        }
+      } catch (_err) {
+        signupStatus.textContent =
+          "Couldn't reach the signup service. Please try again later.";
+        signupStatus.className = "form-status is-error";
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel || "Sign me up";
+        }
+      }
+    });
+  }
+
+  // Email template "Copy" button ----------------------------
+  const copyBtn = document.getElementById("copyTemplateBtn");
+  const templateBody = document.getElementById("templateBody");
+  if (copyBtn && templateBody) {
+    copyBtn.addEventListener("click", async () => {
+      const text = templateBody.textContent || "";
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const range = document.createRange();
+          range.selectNodeContents(templateBody);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          document.execCommand("copy");
+          sel.removeAllRanges();
+        }
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => {
+          copyBtn.textContent = original;
+        }, 1800);
+      } catch (_err) {
+        copyBtn.textContent = "Couldn't copy — select manually";
+      }
+    });
+  }
 })();

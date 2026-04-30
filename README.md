@@ -33,13 +33,32 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 ```
 .
-├── index.html      # All page content
-├── styles.css      # Mobile-first stylesheet
-├── script.js       # Mobile nav + share/copy link
-├── vercel.json     # Static deploy config
+├── index.html              # Main info hub
+├── representatives.html    # Gardner officials + email template
+├── styles.css              # Mobile-first stylesheet
+├── script.js               # Nav, share/copy, signup form, copy template
+├── logo.png                # M-1 brand mark
+├── vercel.json             # Static deploy config (cache + security headers)
+├── ATTRIBUTIONS.md         # Logo, photo, and content credits
 ├── .gitignore
 └── README.md
 ```
+
+## Configuring the email signup form
+
+The form on the home page is wired up to work with [Formspree](https://formspree.io/) (free tier — no backend needed).
+
+1. Sign up at [formspree.io](https://formspree.io/) and create a new form.
+2. Formspree will give you an endpoint that looks like `https://formspree.io/f/abcdwxyz`.
+3. In `index.html`, find the `<form id="signupForm" ...>` element and replace the placeholder in the `action` attribute:
+
+```html
+<form action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
+```
+
+That's it — submissions will land in the email address you used to sign up. Until you replace the placeholder, the form shows a friendly "not connected yet" message instead of submitting.
+
+If you'd rather use a different service (Buttondown, ConvertKit, Mailchimp, Netlify Forms via a redirect, etc.), just change the `action` attribute and `script.js` will keep working.
 
 ## Deploying to Vercel
 
