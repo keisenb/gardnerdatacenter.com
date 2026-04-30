@@ -3,6 +3,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "gardnerdatacenter.com" }],
+      "destination": "https://www.gardnerdatacenter.com/:path*",
+      "permanent": true
+    },
     { "source": "/timeline", "destination": "/meetings", "permanent": true },
     { "source": "/timeline.html", "destination": "/meetings", "permanent": true },
     { "source": "/the-project", "destination": "/the-proposal", "permanent": true },

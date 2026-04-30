@@ -5,7 +5,7 @@
   // Site config — single source of truth for shared chrome
   // =========================================================
   const SITE = {
-    url: "https://gardnerdatacenter.com",
+    url: "https://www.gardnerdatacenter.com",
     name: "Say No to the Gardner Data Center",
   };
 
