@@ -5,8 +5,10 @@
   "redirects": [
     { "source": "/the-project", "destination": "/whats-proposed", "permanent": true },
     { "source": "/the-project.html", "destination": "/whats-proposed", "permanent": true },
-    { "source": "/the-annexation", "destination": "/background", "permanent": true },
-    { "source": "/the-annexation.html", "destination": "/background", "permanent": true },
+    { "source": "/the-annexation", "destination": "/", "permanent": true },
+    { "source": "/the-annexation.html", "destination": "/", "permanent": true },
+    { "source": "/background", "destination": "/", "permanent": true },
+    { "source": "/background.html", "destination": "/", "permanent": true },
     { "source": "/faq", "destination": "/myths", "permanent": true },
     { "source": "/faq.html", "destination": "/myths", "permanent": true }
   ],

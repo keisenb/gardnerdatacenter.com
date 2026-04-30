@@ -45,16 +45,6 @@
         "Planning Commission hearing on the rezoning application. Public comment is taken at this meeting and becomes part of the official record.",
     },
     {
-      id: "protest-petition-deadline",
-      title: "Protest Petition Deadline (approx.)",
-      shortTitle: "Protest Petition Deadline",
-      start: "2026-06-09T17:00:00-05:00",
-      durationMinutes: 60,
-      location: "Gardner City Clerk, 120 E. Main St., Gardner, KS",
-      description:
-        "Approximate deadline to file a valid protest petition under K.S.A. 12-757 — 14 days after the Planning Commission hearing concludes. Verify exact deadline with the City Clerk.",
-    },
-    {
       id: "council-vote",
       title: "Gardner City Council Vote",
       shortTitle: "City Council Vote",

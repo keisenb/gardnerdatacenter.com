@@ -34,16 +34,15 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ```
 .
 ├── index.html              # Home — overview + CTAs into deeper pages
-├── whats-proposed.html        # What's actually being proposed (specifics)
-├── background.html     # How the parcel got into Gardner — and who got left out
+├── whats-proposed.html     # What's actually being proposed (specifics)
 ├── concerns.html           # Detailed impact concerns (water, power, noise, ...)
-├── timeline.html           # Key dates with .ics download per item
-├── myths.html                # Myths & facts
-├── take-action.html        # Engagement options + protest petition mechanics
+├── timeline.html           # Key public meeting dates with .ics download
+├── myths.html              # Myths & facts
+├── take-action.html        # Three steps: sign petition, email reps, attend meeting
 ├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
-├── resources.html          # Local docs, statutes, other community fights, reporting
+├── resources.html          # Local docs, regulators, other community fights, reporting
 ├── styles.css              # Mobile-first stylesheet
-├── script.js               # Nav, banner, sticky CTA, .ics downloads, signup, copy template
+├── script.js               # Nav, banner, sticky CTA, .ics downloads, mailto helper
 ├── logo.png                # M-1 brand mark
 ├── sitemap.xml             # SEO sitemap
 ├── robots.txt              # SEO robots
