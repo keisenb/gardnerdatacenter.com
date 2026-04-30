@@ -56,6 +56,16 @@
     },
   ];
 
+  function syncUrgentBannerOffset() {
+    const el = document.getElementById("urgentBanner");
+    const h =
+      el && el.firstElementChild ? el.getBoundingClientRect().height : 0;
+    document.documentElement.style.setProperty(
+      "--urgent-banner-offset",
+      `${Math.round(h)}px`
+    );
+  }
+
   // =========================================================
   // Build the urgent top banner
   // =========================================================
@@ -93,6 +103,11 @@
         downloadIcs(next);
       });
     }
+
+    requestAnimationFrame(() => {
+      syncUrgentBannerOffset();
+    });
+    window.addEventListener("resize", syncUrgentBannerOffset, { passive: true });
   }
 
   function nextMeeting() {
@@ -196,7 +211,7 @@
   };
 
   // =========================================================
-  // Sticky "Take Action" CTA
+  // Sticky "Take Action Now" CTA
   // =========================================================
   function buildStickyCta() {
     if (document.body.classList.contains("is-take-action")) return;
@@ -204,8 +219,8 @@
     const a = document.createElement("a");
     a.href = "take-action.html";
     a.className = "sticky-cta";
-    a.setAttribute("aria-label", "Take action on the Gardner data center");
-    a.textContent = "Take Action";
+    a.setAttribute("aria-label", "Take action now on the Gardner data center");
+    a.textContent = "Take Action Now";
     document.body.appendChild(a);
   }
 
