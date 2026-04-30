@@ -34,11 +34,11 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ```
 .
 ├── index.html              # Home — overview + CTAs into deeper pages
-├── the-project.html        # What's actually being proposed (specifics)
-├── the-annexation.html     # How the parcel got into Gardner — and who got left out
+├── whats-proposed.html        # What's actually being proposed (specifics)
+├── background.html     # How the parcel got into Gardner — and who got left out
 ├── concerns.html           # Detailed impact concerns (water, power, noise, ...)
 ├── timeline.html           # Key dates with .ics download per item
-├── faq.html                # Myths & facts
+├── myths.html                # Myths & facts
 ├── take-action.html        # Engagement options + protest petition mechanics
 ├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
 ├── resources.html          # Local docs, statutes, other community fights, reporting

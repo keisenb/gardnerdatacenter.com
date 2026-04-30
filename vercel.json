@@ -2,6 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/the-project", "destination": "/whats-proposed", "permanent": true },
+    { "source": "/the-project.html", "destination": "/whats-proposed", "permanent": true },
+    { "source": "/the-annexation", "destination": "/background", "permanent": true },
+    { "source": "/the-annexation.html", "destination": "/background", "permanent": true },
+    { "source": "/faq", "destination": "/myths", "permanent": true },
+    { "source": "/faq.html", "destination": "/myths", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

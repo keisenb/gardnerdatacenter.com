@@ -78,10 +78,10 @@
 
     const dateStr = formatDateShort(next.start);
     const wrap = document.createElement("div");
-    wrap.className = "container urgent-banner-inner";
+    wrap.className = "urgent-banner-inner";
     wrap.innerHTML =
       '<span class="urgent-banner-text">' +
-      '<span class="urgent-banner-label">Next critical date</span> ' +
+      '<span class="urgent-banner-label">Next meeting</span>' +
       '<span class="urgent-banner-message"><strong>' +
       escapeHtml(next.shortTitle) +
       "</strong> — " +
@@ -89,17 +89,16 @@
       "</span>" +
       "</span>" +
       '<span class="urgent-banner-actions">' +
-      '<a href="timeline.html">See full timeline</a>' +
-      '<a href="#" data-ics="' +
+      '<button type="button" class="urgent-banner-cta" data-ics="' +
       next.id +
-      '">Add to calendar</a>' +
+      '">Add to calendar</button>' +
       "</span>";
     slot.appendChild(wrap);
 
     // Wire .ics download
-    const icsLink = wrap.querySelector("[data-ics]");
-    if (icsLink) {
-      icsLink.addEventListener("click", (e) => {
+    const icsBtn = wrap.querySelector("[data-ics]");
+    if (icsBtn) {
+      icsBtn.addEventListener("click", (e) => {
         e.preventDefault();
         downloadIcs(next);
       });
@@ -319,6 +318,63 @@
   const yearEls = document.querySelectorAll("#year");
   yearEls.forEach((el) => {
     el.textContent = String(new Date().getFullYear());
+  });
+
+  // Phone-number formatter for the signup form ---------------
+  // Optional, formats to (XXX) XXX-XXXX as the user types,
+  // plays nicely with backspace and pasting raw digits.
+  function attachPhoneFormatter(input) {
+    if (!input) return;
+    const fmt = (raw) => {
+      const d = raw.replace(/\D/g, "").slice(0, 10);
+      if (d.length === 0) return "";
+      if (d.length < 4) return "(" + d;
+      if (d.length < 7) return "(" + d.slice(0, 3) + ") " + d.slice(3);
+      return "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6);
+    };
+    input.addEventListener("input", () => {
+      const cursorAtEnd = input.selectionStart === input.value.length;
+      const formatted = fmt(input.value);
+      input.value = formatted;
+      if (cursorAtEnd) {
+        input.setSelectionRange(formatted.length, formatted.length);
+      }
+    });
+    input.addEventListener("blur", () => {
+      // Validate: empty (optional) is fine; otherwise must be 10 digits.
+      const digits = input.value.replace(/\D/g, "");
+      if (digits.length === 0 || digits.length === 10) {
+        input.setCustomValidity("");
+      } else {
+        input.setCustomValidity("Please enter a 10-digit phone number, or leave blank.");
+      }
+    });
+  }
+  document.querySelectorAll('input[type="tel"]').forEach(attachPhoneFormatter);
+
+  // Per-representative mailto enhancement -------------------
+  // Each <a class="rep-mailto"> starts with a plain mailto:email href
+  // (so right-click → copy email, and JS-disabled users still get a
+  // working email link). On load, JS rewrites the href to add a
+  // role-appropriate subject and body, properly URL-encoded.
+  document.querySelectorAll(".rep-mailto").forEach((a) => {
+    const original = a.getAttribute("href") || "";
+    if (!original.startsWith("mailto:")) return;
+    const email = original.slice("mailto:".length).split("?")[0];
+    const greeting = a.dataset.greeting || "";
+    const ask = a.dataset.ask || "share my concerns";
+    const subject = "Concerned about the proposed data center in Gardner";
+    const body =
+      "Dear " + greeting + ",\n\n" +
+      "I'm a resident writing to share my concerns about the proposed data center in Gardner. I'm asking you to " + ask + ".\n\n" +
+      "Thank you for your time.\n\n" +
+      "[Your name]\n" +
+      "[Your address]";
+    const url =
+      "mailto:" + encodeURIComponent(email).replace(/%40/g, "@") +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+    a.setAttribute("href", url);
   });
 
   // Email signup form (Formspree-compatible) ----------------
