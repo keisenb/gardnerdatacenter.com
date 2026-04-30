@@ -20,7 +20,6 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
@@ -98,35 +97,15 @@
       <div class="container">
         <span class="section-label">What's actually being proposed</span>
         <h2 class="section-title">A data center is heavy industry — not a tech office.</h2>
-        <p class="section-intro">Marketing renderings make these projects look like sleek campuses. Built and operated, they are fenced industrial sites that run around the clock, with cooling equipment, transformer yards, and rows of diesel backup generators. The photos below are illustrative — not the proposed Gardner site — but they show what facilities at this scale actually look like.</p>
+        <p class="section-intro">Marketing renderings make these projects look like sleek campuses. Built and operated, they are fenced industrial sites that run around the clock, with cooling equipment, transformer yards, and rows of diesel backup generators. The photo below shows what a facility at this scale actually looks like.</p>
 
-        <div class="photo-grid">
-          <figure class="photo-card photo-card-tall">
-            <img loading="lazy" src="https://images.unsplash.com/photo-1715026323215-a2dbb71272f6?auto=format&fit=crop&w=1400&q=75" alt="Aerial view of a hyperscale data center campus, showing the size and footprint of the buildings relative to the surrounding land." />
-            <figcaption>
-              <strong>Aerial view of a comparable data center.</strong>
-              A single campus can cover hundreds of acres of windowless buildings, parking, transformer yards, and access roads.
-            </figcaption>
-          </figure>
-
-          <figure class="photo-card">
-            <img loading="lazy" src="https://images.unsplash.com/photo-1715026323201-35df017e8115?auto=format&fit=crop&w=1200&q=75" alt="Aerial view of a large data center site, showing the industrial footprint." />
-            <figcaption>
-              <strong>An industrial-scale build.</strong>
-              Construction takes years and brings sustained heavy-truck traffic to surrounding rural roads.
-            </figcaption>
-          </figure>
-
-          <figure class="photo-card">
-            <img loading="lazy" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=75" alt="Inside a data center: rows of equipment racks lit by interior lighting." />
-            <figcaption>
-              <strong>What runs inside.</strong>
-              Tens of thousands of servers — every one of them generating heat that has to be cooled, around the clock.
-            </figcaption>
-          </figure>
-        </div>
-
-        <p class="photo-credit">Photos via <a href="https://unsplash.com/s/photos/data-center" target="_blank" rel="noopener">Unsplash</a>. Illustrative — not photos of the proposed Gardner site.</p>
+        <figure class="photo-feature">
+          <img loading="lazy" src="images/data-center-aerial.jpg" alt="Aerial view of a hyperscale data center campus showing multiple long, white-roofed warehouse-style buildings, large parking lots, transformer yards, and an active construction site adjacent to existing structures." width="1024" height="682" />
+          <figcaption>
+            <strong>An operating data center campus, from the air.</strong>
+            Multiple buildings, transformer yards, parking, and ongoing construction. A facility at this scale is a permanent, industrial-grade neighbor — not a building on a business-park lot. (Illustrative aerial of an existing campus, not the proposed Gardner site.)
+          </figcaption>
+        </figure>
 
         <div class="box">
           <span class="box-tag">Read more</span>
@@ -265,42 +244,6 @@
       </div>
     </section>
 
-    <!-- EMAIL SIGNUP -->
-    <section id="updates" class="section section-soft">
-      <div class="container signup-inner">
-        <div class="signup-text">
-          <span class="section-label">Stay in the loop</span>
-          <h2 class="section-title">Get updates as this moves forward.</h2>
-          <p class="section-intro">No spam — just brief updates when there's a meeting to attend, a public comment window to weigh in on, or important news. Unsubscribe anytime.</p>
-        </div>
-
-        <form
-          class="signup-form"
-          id="signupForm"
-          action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
-          method="POST"
-          novalidate
-        >
-          <div class="form-row">
-            <label for="signup-name" class="sr-only">Your name</label>
-            <input id="signup-name" name="name" type="text" autocomplete="name" placeholder="Your name (optional)" />
-          </div>
-          <div class="form-row">
-            <label for="signup-email" class="sr-only">Email address</label>
-            <input id="signup-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
-          </div>
-          <div class="form-row">
-            <label for="signup-phone" class="sr-only">Phone (optional)</label>
-            <input id="signup-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="14" placeholder="(913) 555-0123 — optional" />
-          </div>
-          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
-          <button type="submit" class="btn btn-primary form-submit">Sign me up</button>
-          <p class="form-status" id="signupStatus" role="status" aria-live="polite"></p>
-          <p class="form-fineprint">We use this list to share updates about this issue only. We don't sell or share your information.</p>
-        </form>
-      </div>
-    </section>
-
     <!-- HOW WE GOT HERE — DEMOTED, BRIEF -->
     <section class="section section-light">
       <div class="container">
@@ -346,7 +289,7 @@
         <a href="resources.html">Resources</a>
       </nav>
 
-      <p class="footer-disclaimer">This site is maintained by community volunteers and is not affiliated with any government agency or developer. Information is provided for public awareness; please verify details with official sources before acting on them. Photos in the visual primer above are illustrative stock photos via Unsplash, not photos of the proposed Gardner site.</p>
+      <p class="footer-disclaimer">This site is maintained by community volunteers and is not affiliated with any government agency or developer. Information is provided for public awareness; please verify details with official sources before acting on them. Aerial photo above is illustrative — an existing data center campus, not the proposed Gardner site.</p>
 
       <p class="footer-copy">&copy; <span id="year"></span> Gardner Community Information.</p>
     </div>

@@ -320,38 +320,6 @@
     el.textContent = String(new Date().getFullYear());
   });
 
-  // Phone-number formatter for the signup form ---------------
-  // Optional, formats to (XXX) XXX-XXXX as the user types,
-  // plays nicely with backspace and pasting raw digits.
-  function attachPhoneFormatter(input) {
-    if (!input) return;
-    const fmt = (raw) => {
-      const d = raw.replace(/\D/g, "").slice(0, 10);
-      if (d.length === 0) return "";
-      if (d.length < 4) return "(" + d;
-      if (d.length < 7) return "(" + d.slice(0, 3) + ") " + d.slice(3);
-      return "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6);
-    };
-    input.addEventListener("input", () => {
-      const cursorAtEnd = input.selectionStart === input.value.length;
-      const formatted = fmt(input.value);
-      input.value = formatted;
-      if (cursorAtEnd) {
-        input.setSelectionRange(formatted.length, formatted.length);
-      }
-    });
-    input.addEventListener("blur", () => {
-      // Validate: empty (optional) is fine; otherwise must be 10 digits.
-      const digits = input.value.replace(/\D/g, "");
-      if (digits.length === 0 || digits.length === 10) {
-        input.setCustomValidity("");
-      } else {
-        input.setCustomValidity("Please enter a 10-digit phone number, or leave blank.");
-      }
-    });
-  }
-  document.querySelectorAll('input[type="tel"]').forEach(attachPhoneFormatter);
-
   // Per-representative mailto enhancement -------------------
   // Each <a class="rep-mailto"> starts with a plain mailto:email href
   // (so right-click → copy email, and JS-disabled users still get a
@@ -376,68 +344,6 @@
       "&body=" + encodeURIComponent(body);
     a.setAttribute("href", url);
   });
-
-  // Email signup form (Formspree-compatible) ----------------
-  const signupForm = document.getElementById("signupForm");
-  const signupStatus = document.getElementById("signupStatus");
-
-  if (signupForm && signupStatus) {
-    signupForm.addEventListener("submit", async (e) => {
-      const action = signupForm.getAttribute("action") || "";
-
-      // If the form action hasn't been configured yet, don't submit a broken request.
-      if (!action || action.includes("REPLACE_WITH_FORM_ID")) {
-        e.preventDefault();
-        signupStatus.textContent =
-          "Thanks! The signup form isn't connected yet — please check back soon.";
-        signupStatus.className = "form-status";
-        return;
-      }
-
-      e.preventDefault();
-      const formData = new FormData(signupForm);
-      const submitBtn = signupForm.querySelector(".form-submit");
-      const originalLabel = submitBtn ? submitBtn.textContent : "";
-
-      try {
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Sending...";
-        }
-        signupStatus.textContent = "";
-        signupStatus.className = "form-status";
-
-        const response = await fetch(action, {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "application/json" },
-        });
-
-        if (response.ok) {
-          signupStatus.textContent =
-            "You're on the list. Watch your inbox for updates.";
-          signupStatus.className = "form-status is-success";
-          signupForm.reset();
-        } else {
-          const data = await response.json().catch(() => ({}));
-          const msg =
-            (data && data.errors && data.errors[0] && data.errors[0].message) ||
-            "Something went wrong. Please try again.";
-          signupStatus.textContent = msg;
-          signupStatus.className = "form-status is-error";
-        }
-      } catch (_err) {
-        signupStatus.textContent =
-          "Couldn't reach the signup service. Please try again later.";
-        signupStatus.className = "form-status is-error";
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalLabel || "Sign me up";
-        }
-      }
-    });
-  }
 
   // Email template "Copy" button ----------------------------
   const copyBtn = document.getElementById("copyTemplateBtn");

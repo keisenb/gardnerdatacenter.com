@@ -68,22 +68,6 @@ All meetings live in a single `MEETINGS` array near the top of `script.js`. Each
 
 The top banner automatically picks the soonest upcoming meeting.
 
-## Configuring the email signup form
-
-The form on the home page is wired up to work with [Formspree](https://formspree.io/) (free tier — no backend needed).
-
-1. Sign up at [formspree.io](https://formspree.io/) and create a new form.
-2. Formspree will give you an endpoint that looks like `https://formspree.io/f/abcdwxyz`.
-3. In `index.html`, find the `<form id="signupForm" ...>` element and replace the placeholder in the `action` attribute:
-
-```html
-<form action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
-```
-
-That's it — submissions will land in the email address you used to sign up. Until you replace the placeholder, the form shows a friendly "not connected yet" message instead of submitting.
-
-If you'd rather use a different service (Buttondown, ConvertKit, Mailchimp, Netlify Forms via a redirect, etc.), just change the `action` attribute and `script.js` will keep working.
-
 ## Deploying to Vercel
 
 The site deploys as a pure static site — there is no build step.
