@@ -25,7 +25,7 @@
     {
       id: "public-meeting-1",
       title: "Beale public information meeting #1 - Gardner data center proposal",
-      start: "2026-05-13T18:00:00-05:00",
+      start: "2026-05-13T19:00:00-05:00",
       durationMinutes: 90,
       location:
         "Wheatridge Middle School, Gardner, KS",
@@ -35,7 +35,7 @@
     {
       id: "public-meeting-2",
       title: "Beale public information meeting #2 - Gardner data center proposal (virtual)",
-      start: "2026-05-15T18:00:00-05:00",
+      start: "2026-05-15T10:00:00-05:00",
       durationMinutes: 90,
       location: "Virtual (details to be announced)",
       description:
