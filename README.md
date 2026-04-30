@@ -33,16 +33,40 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 ```
 .
-├── index.html              # Main info hub
-├── representatives.html    # Gardner officials + email template
+├── index.html              # Home — overview + CTAs into deeper pages
+├── the-project.html        # What's actually being proposed (specifics)
+├── the-annexation.html     # How the parcel got into Gardner — and who got left out
+├── concerns.html           # Detailed impact concerns (water, power, noise, ...)
+├── timeline.html           # Key dates with .ics download per item
+├── faq.html                # Myths & facts
+├── take-action.html        # Engagement options + protest petition mechanics
+├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
+├── resources.html          # Local docs, statutes, other community fights, reporting
 ├── styles.css              # Mobile-first stylesheet
-├── script.js               # Nav, share/copy, signup form, copy template
+├── script.js               # Nav, banner, sticky CTA, .ics downloads, signup, copy template
 ├── logo.png                # M-1 brand mark
-├── vercel.json             # Static deploy config (cache + security headers)
+├── sitemap.xml             # SEO sitemap
+├── robots.txt              # SEO robots
+├── vercel.json             # Static deploy config (clean URLs + cache + security headers)
 ├── ATTRIBUTIONS.md         # Logo, photo, and content credits
 ├── .gitignore
 └── README.md
 ```
+
+## Maintaining shared chrome across pages
+
+The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. If you change the nav (or footer links), update every page. Search for `BEGIN SHARED` to find all occurrences quickly.
+
+The **next-meeting banner** and **sticky "Take Action" CTA** are injected by `script.js` — no HTML edits needed when meetings change.
+
+## Updating meeting dates
+
+All meetings live in a single `MEETINGS` array near the top of `script.js`. Each entry needs an `id`, `title`, `start` (ISO 8601 with timezone), `durationMinutes`, `location`, and `description`. Adding or moving a meeting:
+
+1. Edit the `MEETINGS` array in `script.js`.
+2. (Optional) Reflect the change on `timeline.html`, which renders timeline entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Add to calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
+
+The top banner automatically picks the soonest upcoming meeting.
 
 ## Configuring the email signup form
 
