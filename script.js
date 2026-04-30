@@ -361,13 +361,19 @@
     const email = original.slice("mailto:".length).split("?")[0];
     const greeting = a.dataset.greeting || "";
     const ask = a.dataset.ask || "share my concerns";
-    const subject = "Concerned about the proposed data center in Gardner";
+    const subject =
+      "Concerned about the Gardner data center (24/7 impacts, diesel air quality, WaterOne, waste heat, zoning)";
     const body =
       "Dear " + greeting + ",\n\n" +
-      "I'm a resident writing to share my concerns about the proposed data center in Gardner. I'm asking you to " + ask + ".\n\n" +
-      "Thank you for your time.\n\n" +
+      "I am writing as a resident with serious concerns about the proposed hyperscale data center southeast of Gardner (on the order of 300 acres near 191st Street and South Clare Road). The parcel is surrounded by existing homes.\n\n" +
+      "My biggest worries are what neighbors would live with every day, not one-time photo opportunities. Cooling and security operations would run around the clock, with noise and bright light at night that do not stop for weekends or holidays. Diesel backup generators must be tested on a fixed schedule, and any power outage triggers more runtime. That exhaust is an air-quality and public-health issue: fine particulates and other pollution hit children, older adults, and anyone with asthma, heart, or lung disease especially hard.\n\n" +
+      "Water for the project would come from WaterOne. Beale describes closed-loop cooling today, but operators elsewhere have later shifted to open, water-intensive cooling (for example evaporative towers) when demand grows, unless a development agreement locks in real limits. I want our community protected if daily use or cooling type changes after approval.\n\n" +
+      "These sites also shed enormous waste heat. Our neighbors have been discussing temperature rise and quality-of-life effects across roughly a six-mile radius around a campus this scale, including heat-related stress and other health burdens that come with living next to heavy industrial load.\n\n" +
+      "Finally, approving heavy industrial (M-1) zoning here sets precedent. It makes the next industrial rezoning beside homes or farmland harder to refuse and changes the future of the whole area.\n\n" +
+      "I am asking you to " + ask + ".\n\n" +
+      "Thank you for reading and for your public service.\n\n" +
       "[Your name]\n" +
-      "[Your address]";
+      "[Your address or neighborhood]";
     const url =
       "mailto:" + encodeURIComponent(email).replace(/%40/g, "@") +
       "?subject=" + encodeURIComponent(subject) +
@@ -399,7 +405,7 @@
           copyBtn.textContent = original;
         }, 1800);
       } catch (_err) {
-        copyBtn.textContent = "Couldn't copy — select manually";
+        copyBtn.textContent = "Couldn't copy, select manually";
       }
     });
   }
