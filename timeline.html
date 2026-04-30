@@ -7,13 +7,13 @@
   <title>Timeline: Key Dates &amp; Milestones | Say No to the Gardner Data Center</title>
   <meta name="description" content="Public meetings, the Planning Commission hearing, and the City Council vote on the proposed Gardner data center. With Add-to-Calendar for each date." />
   <meta name="keywords" content="Gardner data center timeline, Gardner planning commission hearing, Gardner city council vote" />
-  <link rel="canonical" href="https://saynodatacentergardnerks.com/timeline" />
+  <link rel="canonical" href="https://gardnerdatacenter.com/timeline" />
 
   <meta property="og:title" content="Timeline: Key Dates &amp; Milestones for the Gardner Data Center" />
   <meta property="og:description" content="Public meetings, the Planning Commission hearing, and the City Council vote — in one place." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://saynodatacentergardnerks.com/timeline" />
-  <meta property="og:image" content="https://saynodatacentergardnerks.com/logo.png" />
+  <meta property="og:url" content="https://gardnerdatacenter.com/timeline" />
+  <meta property="og:image" content="https://gardnerdatacenter.com/logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,7 +62,7 @@
         <a href="index.html" class="back-link">&larr; Back to home</a>
         <span class="eyebrow">Timeline</span>
         <h1>Key dates and milestones.</h1>
-        <p class="lede">Here are the public meetings and the City Council vote ahead. Use the "Add to calendar" links to put each date on your phone or computer calendar.</p>
+        <p class="lede">Here are the public meetings and the City Council vote ahead. Use <strong>Add to Calendar</strong> to save each date on your device, or <strong>Google Calendar</strong> for a browser shortcut — same details either way.</p>
       </div>
     </section>
 
@@ -90,8 +90,9 @@
             <div class="timeline-body">
               <p>First City-hosted public meeting on the proposal. Attend in person, listen, and ask questions. Verify time and location with the City Clerk.</p>
             </div>
-            <div class="timeline-actions">
-              <a href="#" data-ics="public-meeting-1">Add to calendar &rarr;</a>
+            <div class="timeline-actions timeline-calendar-actions">
+              <a href="#" data-ics="public-meeting-1">Add to Calendar &rarr;</a>
+              <a href="#" data-gcal="public-meeting-1" target="_blank" rel="noopener">Google Calendar &rarr;</a>
               <a href="take-action.html#meeting">How to prepare &rarr;</a>
             </div>
           </li>
@@ -103,8 +104,9 @@
             <div class="timeline-body">
               <p>Second City-hosted public meeting. Same agenda topic; a second opportunity to attend if you can't make the May 13 meeting.</p>
             </div>
-            <div class="timeline-actions">
-              <a href="#" data-ics="public-meeting-2">Add to calendar &rarr;</a>
+            <div class="timeline-actions timeline-calendar-actions">
+              <a href="#" data-ics="public-meeting-2">Add to Calendar &rarr;</a>
+              <a href="#" data-gcal="public-meeting-2" target="_blank" rel="noopener">Google Calendar &rarr;</a>
             </div>
           </li>
 
@@ -116,8 +118,9 @@
               <p>The Planning Commission reviews the rezoning application and makes a formal recommendation to the City Council. Public comment is invited and becomes part of the official record.</p>
               <p><strong>This is the meeting where in-person testimony has the most direct impact.</strong></p>
             </div>
-            <div class="timeline-actions">
-              <a href="#" data-ics="planning-commission">Add to calendar &rarr;</a>
+            <div class="timeline-actions timeline-calendar-actions">
+              <a href="#" data-ics="planning-commission">Add to Calendar &rarr;</a>
+              <a href="#" data-gcal="planning-commission" target="_blank" rel="noopener">Google Calendar &rarr;</a>
               <a href="take-action.html#meeting">How to prepare &rarr;</a>
             </div>
           </li>
@@ -129,8 +132,9 @@
             <div class="timeline-body">
               <p>City Council votes on the rezoning application. Public comment is taken before the vote. This is the final decision-making meeting.</p>
             </div>
-            <div class="timeline-actions">
-              <a href="#" data-ics="council-vote">Add to calendar &rarr;</a>
+            <div class="timeline-actions timeline-calendar-actions">
+              <a href="#" data-ics="council-vote">Add to Calendar &rarr;</a>
+              <a href="#" data-gcal="council-vote" target="_blank" rel="noopener">Google Calendar &rarr;</a>
               <a href="representatives.html">Email your council members &rarr;</a>
             </div>
           </li>
@@ -182,23 +186,5 @@
   <!-- END SHARED FOOTER -->
 
   <script src="script.js" defer></script>
-  <script>
-    // Wire up the inline "Add to calendar" links on the timeline.
-    // script.js exposes the meeting data + helper on window.__SITE_DATA__.
-    window.addEventListener("load", () => {
-      const data = window.__SITE_DATA__;
-      if (!data || !data.meetings || !data.downloadIcs) return;
-      const byId = Object.fromEntries(data.meetings.map((m) => [m.id, m]));
-      document.querySelectorAll(".timeline-actions [data-ics]").forEach((a) => {
-        const id = a.getAttribute("data-ics");
-        const m = byId[id];
-        if (!m) return;
-        a.addEventListener("click", (e) => {
-          e.preventDefault();
-          data.downloadIcs(m);
-        });
-      });
-    });
-  </script>
 </body>
 </html>

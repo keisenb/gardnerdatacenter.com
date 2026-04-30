@@ -10,13 +10,16 @@ credit them.
 
 ## Photography
 
-The illustrative data center photos used in the "What it actually looks like"
-section are hot-linked from [Unsplash](https://unsplash.com/) and are used
-under the [Unsplash License](https://unsplash.com/license).
+The home page **featured aerial** (`images/data-center-campus-aerial.png`) is an
+illustrative photo of an operating hyperscale-style data center campus and is
+**not** the proposed Gardner site.
+
+Additional illustrative data center photos used elsewhere may be sourced from
+[Unsplash](https://unsplash.com/) under the
+[Unsplash License](https://unsplash.com/license).
 
 | Photo | Photographer | Source |
 |-------|--------------|--------|
-| Aerial view of a hyperscale data center campus | Geoffrey Moffett | [Unsplash · `N9pLLb_M8DQ`](https://unsplash.com/photos/an-aerial-view-of-a-large-industrial-building-N9pLLb_M8DQ) |
 | Aerial view of a large data center | Geoffrey Moffett | [Unsplash · `eUJ94RVUSew`](https://unsplash.com/photos/an-aerial-view-of-a-large-industrial-building-eUJ94RVUSew) |
 | Cable network / interior data center | Taylor Vick | [Unsplash · `M5tzZtFCOfs`](https://unsplash.com/photos/cable-network-M5tzZtFCOfs) |
 

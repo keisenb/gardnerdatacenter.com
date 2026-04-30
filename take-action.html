@@ -7,13 +7,13 @@
   <title>Take Action Now: Gardner Data Center | Say No</title>
   <meta name="description" content="Three things residents can do before the City Council vote on the proposed data center in Gardner: attend the next meeting, email your representatives, and sign the petition." />
   <meta name="keywords" content="Gardner data center take action, email Gardner Mayor, email Gardner City Council, Gardner planning commission, Johnson County Commissioner Shirley Allenbrand" />
-  <link rel="canonical" href="https://saynodatacentergardnerks.com/take-action" />
+  <link rel="canonical" href="https://gardnerdatacenter.com/take-action" />
 
   <meta property="og:title" content="Take Action Now on the Gardner Data Center" />
   <meta property="og:description" content="Three things to do before the City Council vote." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://saynodatacentergardnerks.com/take-action" />
-  <meta property="og:image" content="https://saynodatacentergardnerks.com/logo.png" />
+  <meta property="og:url" content="https://gardnerdatacenter.com/take-action" />
+  <meta property="og:image" content="https://gardnerdatacenter.com/logo.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -224,7 +224,8 @@
               <h3>Public Meeting #1</h3>
               <p class="meeting-callout-where">City Hall<br />120 E. Main Street, Gardner, KS 66030</p>
               <div class="meeting-callout-actions">
-                <button type="button" class="btn btn-primary" data-ics="public-meeting-1">Add to calendar</button>
+                <button type="button" class="btn btn-primary" data-ics="public-meeting-1">Add to Calendar</button>
+                <a class="btn btn-ghost" href="#" data-gcal="public-meeting-1" target="_blank" rel="noopener">Google Calendar</a>
                 <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=120+E+Main+St+Gardner+KS+66030" target="_blank" rel="noopener">Get directions</a>
               </div>
             </div>
@@ -275,24 +276,5 @@
   <!-- END SHARED FOOTER -->
 
   <script src="script.js" defer></script>
-  <script>
-    // Wire up "Add to calendar" buttons that use data-ics attributes.
-    window.addEventListener("load", () => {
-      const data = window.__SITE_DATA__;
-      if (!data || !data.meetings || !data.downloadIcs) return;
-      const byId = Object.fromEntries(data.meetings.map((m) => [m.id, m]));
-      document.querySelectorAll("[data-ics]").forEach((el) => {
-        // Skip if already wired (e.g., the urgent banner CTA)
-        if (el.dataset.icsWired === "true") return;
-        const m = byId[el.getAttribute("data-ics")];
-        if (!m) return;
-        el.dataset.icsWired = "true";
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          data.downloadIcs(m);
-        });
-      });
-    });
-  </script>
 </body>
 </html>

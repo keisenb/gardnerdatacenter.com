@@ -5,54 +5,53 @@
   // Site config — single source of truth for shared chrome
   // =========================================================
   const SITE = {
-    url: "https://saynodatacentergardnerks.com",
+    url: "https://gardnerdatacenter.com",
     name: "Say No to the Gardner Data Center",
   };
 
   // Key dates / meetings. Ordered by date.
-  // Update this array whenever a meeting is added or moved.
-  // Times are local to America/Chicago (Gardner, KS).
+  // Update whenever a meeting is added or moved. Times: America/Chicago (Gardner, KS).
+  // Titles & descriptions feed .ics + Google Calendar — keep wording specific to this site.
   const MEETINGS = [
     {
       id: "public-meeting-1",
-      title: "Public Meeting #1 (Gardner)",
+      title: "Gardner public meeting #1 — proposed data center rezoning",
       shortTitle: "Public Meeting",
-      // ISO datetime with -05:00 (CDT in May 2026)
       start: "2026-05-13T18:00:00-05:00",
       durationMinutes: 90,
-      location: "City Hall, 120 E. Main St., Gardner, KS",
+      location: "Gardner City Hall, 120 E. Main St., Gardner, KS 66030",
       description:
-        "Public meeting on the proposed Beale Infrastructure data center at 191st & S. Clare Rd. Bring questions and comments.",
+        "First City-hosted public meeting on the proposed M-1 rezoning for a hyperscale data center near 191st St. & S. Clare Road. This event was added from Say No to the Gardner Data Center (gardnerdatacenter.com) — neighbors sharing public information, not a City posting. Confirm date, time, and room with the Gardner City Clerk before you travel.",
     },
     {
       id: "public-meeting-2",
-      title: "Public Meeting #2 (Gardner)",
+      title: "Gardner public meeting #2 — proposed data center rezoning",
       shortTitle: "Public Meeting",
       start: "2026-05-15T18:00:00-05:00",
       durationMinutes: 90,
-      location: "City Hall, 120 E. Main St., Gardner, KS",
+      location: "Gardner City Hall, 120 E. Main St., Gardner, KS 66030",
       description:
-        "Second public meeting on the proposed Beale Infrastructure data center at 191st & S. Clare Rd.",
+        "Second City-hosted public meeting on the same proposed rezoning — another chance to attend if you missed May 13. Entry created by Say No to the Gardner Data Center; verify details with the City of Gardner.",
     },
     {
       id: "planning-commission",
-      title: "Gardner Planning Commission Hearing",
+      title: "Gardner Planning Commission — data center rezoning hearing",
       shortTitle: "Planning Commission",
       start: "2026-05-26T19:00:00-05:00",
       durationMinutes: 120,
-      location: "City Hall, Council Chambers, 120 E. Main St., Gardner, KS",
+      location: "Gardner City Hall, Council Chambers, 120 E. Main St., Gardner, KS 66030",
       description:
-        "Planning Commission hearing on the rezoning application. Public comment is taken at this meeting and becomes part of the official record.",
+        "Planning Commission hearing on the rezoning application. Public comment becomes part of the official record. Calendar details from gardnerdatacenter.com (community volunteers). Confirm agenda and location with the City.",
     },
     {
       id: "council-vote",
-      title: "Gardner City Council Vote",
+      title: "Gardner City Council vote — data center rezoning",
       shortTitle: "City Council Vote",
       start: "2026-06-15T19:00:00-05:00",
       durationMinutes: 120,
-      location: "City Hall, Council Chambers, 120 E. Main St., Gardner, KS",
+      location: "Gardner City Hall, Council Chambers, 120 E. Main St., Gardner, KS 66030",
       description:
-        "City Council vote on the rezoning application. Final decision-making meeting.",
+        "City Council vote on the rezoning application — final decision-making meeting. This event listing is from Say No to the Gardner Data Center for neighbor planning only; the City’s agenda is the official source.",
     },
   ];
 
@@ -91,18 +90,9 @@
       '<span class="urgent-banner-actions">' +
       '<button type="button" class="urgent-banner-cta" data-ics="' +
       next.id +
-      '">Add to calendar</button>' +
+      '">Add to Calendar</button>' +
       "</span>";
     slot.appendChild(wrap);
-
-    // Wire .ics download
-    const icsBtn = wrap.querySelector("[data-ics]");
-    if (icsBtn) {
-      icsBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        downloadIcs(next);
-      });
-    }
 
     requestAnimationFrame(() => {
       syncUrgentBannerOffset();
@@ -136,6 +126,44 @@
     }
   }
 
+  function buildCalendarDescription(meeting) {
+    return (
+      (meeting.description || "").trim() +
+      "\n\n—\n" +
+      SITE.name +
+      "\n" +
+      SITE.url +
+      "\nTimeline: " +
+      SITE.url +
+      "/timeline.html\nTake action: " +
+      SITE.url +
+      "/take-action.html"
+    );
+  }
+
+  // Google Calendar "add event" template (same fields as .ics)
+  function googleCalendarUrl(meeting) {
+    const start = new Date(meeting.start);
+    const end = new Date(
+      start.getTime() + (meeting.durationMinutes || 60) * 60 * 1000
+    );
+    const text = meeting.title + " · " + SITE.name;
+    const dates = toIcsDate(start) + "/" + toIcsDate(end);
+    const details = buildCalendarDescription(meeting);
+    const loc = meeting.location || "";
+    return (
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" +
+      encodeURIComponent(text) +
+      "&dates=" +
+      dates +
+      "&details=" +
+      encodeURIComponent(details) +
+      "&location=" +
+      encodeURIComponent(loc)
+    );
+  }
+
   // .ics generator (per VCALENDAR / RFC 5545)
   function downloadIcs(meeting) {
     const start = new Date(meeting.start);
@@ -145,17 +173,17 @@
     const lines = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//Say No Gardner Data Center//EN",
+      "PRODID:-//gardnerdatacenter.com//Say No Gardner Data Center//EN",
       "CALSCALE:GREGORIAN",
       "METHOD:PUBLISH",
       "BEGIN:VEVENT",
-      "UID:" + meeting.id + "@saynodatacentergardnerks.com",
+      "UID:" + meeting.id + "@gardnerdatacenter.com",
       "DTSTAMP:" + toIcsDate(new Date()),
       "DTSTART:" + toIcsDate(start),
       "DTEND:" + toIcsDate(end),
       "SUMMARY:" + icsEscape(meeting.title),
       "LOCATION:" + icsEscape(meeting.location || ""),
-      "DESCRIPTION:" + icsEscape(meeting.description || ""),
+      "DESCRIPTION:" + icsEscape(buildCalendarDescription(meeting)),
       "URL:" + SITE.url + "/timeline.html",
       "END:VEVENT",
       "END:VCALENDAR",
@@ -166,7 +194,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = meeting.id + ".ics";
+    a.download = "gardnerdatacenter-" + meeting.id + ".ics";
     document.body.appendChild(a);
     a.click();
     setTimeout(() => {
@@ -202,12 +230,37 @@
       .replace(/"/g, "&quot;");
   }
 
+  function wireIcsAndGcalLinks() {
+    const byId = Object.fromEntries(MEETINGS.map((m) => [m.id, m]));
+    document.querySelectorAll("[data-gcal]").forEach((el) => {
+      const m = byId[el.getAttribute("data-gcal") || ""];
+      if (!m) return;
+      if (el instanceof HTMLAnchorElement) {
+        el.href = googleCalendarUrl(m);
+      }
+    });
+    document.querySelectorAll("[data-ics]").forEach((el) => {
+      if (el.dataset.icsWired === "true") return;
+      const id = el.getAttribute("data-ics") || "";
+      const m = byId[id];
+      if (!m) return;
+      if (!(el instanceof HTMLElement)) return;
+      el.dataset.icsWired = "true";
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        downloadIcs(m);
+      });
+    });
+  }
+
   // Expose meetings + ICS helper for any page that wants to use them
   // (e.g., the timeline page wires per-item "Add to calendar" links).
   window.__SITE_DATA__ = {
     meetings: MEETINGS,
     site: SITE,
     downloadIcs: downloadIcs,
+    googleCalendarUrl: googleCalendarUrl,
+    buildCalendarDescription: buildCalendarDescription,
   };
 
   // =========================================================
@@ -229,10 +282,12 @@
     document.addEventListener("DOMContentLoaded", () => {
       buildBanner();
       buildStickyCta();
+      wireIcsAndGcalLinks();
     });
   } else {
     buildBanner();
     buildStickyCta();
+    wireIcsAndGcalLinks();
   }
 
   // =========================================================
