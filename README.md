@@ -34,7 +34,7 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ```
 .
 ├── index.html              # Home — overview + CTAs into deeper pages
-├── the-proposal.html       # The proposal + sourced "What's at stake" impacts
+├── the-proposal.html       # One-page proposal: plain-language rundown + impacts + sources
 ├── meetings.html           # Public meetings list with .ics / Google Calendar links
 ├── myths.html              # Myths & facts
 ├── take-action.html        # Three steps: sign petition, email reps, attend meeting
@@ -91,7 +91,7 @@ vercel --prod # production deploy
 All copy lives in `index.html` and is grouped by `<section>`. To update:
 
 - **Headlines / hero copy** — search for `class="hero"`.
-- **The Proposal** — `the-proposal.html`: project summary, reality checks, and impact deep-dives (`id="impacts"`, articles like `id="power"`).
+- **The Proposal** — `the-proposal.html`: merged flow (site, power, water, diesel/air, noise, roads, etc.) with reality-check callouts and footnotes; section anchors include `id="impacts"`, `id="power"`, `id="air"`.
 - **Myths vs Facts** — search for `id="facts"`. Each row is a `<article class="myth-card">`.
 - **Resources** — search for `id="resources"`. Each link is a `<a class="resource-card">`.
 - **Take Action** — search for `id="action"`.
