@@ -237,6 +237,19 @@ p { margin: 0 0 1rem; }
   padding: 0.85rem 1rem;
   font-weight: 700;
 }
+.primary-nav .nav-donate {
+  margin-top: 0.5rem;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent);
+  border-bottom: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
+  font-weight: 600;
+}
+.primary-nav .nav-donate:hover {
+  background: var(--color-bg-soft);
+}
 
 /* Buttons -------------------------------------------------- */
 .btn {
@@ -824,6 +837,17 @@ p { margin: 0 0 1rem; }
     padding: 0.55rem 1rem;
   }
   .primary-nav .nav-cta:hover { background: var(--color-accent-hover); }
+  .primary-nav .nav-donate {
+    margin-top: 0;
+    margin-left: 0.35rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+  }
+  .primary-nav .nav-donate:hover {
+    background: var(--color-bg-soft);
+    color: var(--color-accent);
+  }
 
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
