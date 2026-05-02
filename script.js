@@ -369,29 +369,47 @@
     }, 1800);
   }
 
+  function buildRepMailtoBody(addressee) {
+    const salutation =
+      addressee && addressee.trim()
+        ? "Dear " + addressee.trim() + ",\n\n"
+        : "Dear Mayor / Council Member / Commissioner,\n\n";
+    return (
+      salutation +
+      "My name is [Your Name] and I live at [Your Address]. I'm writing about the proposed Beale Infrastructure data center at 191st Street and South Clare Road, which comes before the Planning Commission on May 26 and the City Council on June 15.\n\n" +
+      "I'm not asking you to reject growth. I'm asking you to follow Gardner's own plan.\n\n" +
+      "When the City annexed the 300-acre parcel under Ordinance 2739, the boundary was deliberately drawn to bring in the agricultural land while excluding the homes that surround it on three sides. The seller and the developer are now inside Gardner. The neighbors who will live with the noise, traffic, lights, water draw, and diesel exhaust are not. They have no vote in the decision before you.\n\n" +
+      "A few months ago, this Planning Commission voted no on a rezoning along 199th Street west of Gardner Road because of traffic and compatibility concerns. That was the right call. The same reasoning applies here at much greater magnitude.\n\n" +
+      "The City's own adopted I-35 & 175th Street Subarea Plan does not even cover this site — its southern boundary stops half a mile north of W. 183rd Street. And inside the area the Plan does cover, the language is explicit: compatibility \"shall\" be accomplished by transition of uses, with low-intensity industrial along the perimeter adjacent to less intensive uses. A 300-acre hyperscale data center directly adjacent to existing homes, with no transition zone, is the opposite of what Gardner's adopted policy requires.\n\n" +
+      "I would also urge you to look closely at who is asking you to override that policy.\n\n" +
+      "Beale Infrastructure was formed in August 2024 as the build-to-suit arm of Blue Owl Capital. Blue Owl's stock has fallen 68% in the past 16 months. Its private credit funds faced $5.4 billion in withdrawal requests last quarter. It walked away from a $10 billion committed Oracle data center deal in Michigan in December, citing local politics. The company that immediately preceded Beale — same team, same address, same money — paid an $11.5 million federal sanctions penalty in December for four years of dealings with a sanctioned Russian oligarch. Beale's sister company is currently a defendant in a $2 billion racketeering lawsuit, and a senior Blue Owl executive is named personally.\n\n" +
+      "In its first 18 months, Beale has been rejected, sued, or forced to withdraw in Tucson, Marana, Coweta Oklahoma, and St. Charles Missouri. There is no community where Beale has won a contested approval without litigation, withdrawal, or a referendum challenge.\n\n" +
+      "I'm asking you to do three things:\n" +
+      "Apply the same standard the Planning Commission applied at 199th and Gardner Road.\n" +
+      "Enforce the Subarea Plan the City adopted.\n" +
+      "Decline to schedule any rezoning vote until the end-tenant is publicly disclosed, the Large Load Power Service tariff terms are on the public record, and the residents excluded from Ordinance 2739 are heard.\n\n" +
+      "This is not about being anti-growth. It's about Gardner growing the way Gardner said it would grow.\n\n" +
+      "Please follow your plan.\n\n" +
+      "Thank you for your time and for your service to our community.\n\n" +
+      "Respectfully,\n" +
+      "[Your Name]\n" +
+      "[Your Address]\n" +
+      "[Your Phone]\n" +
+      "[Your Email]"
+    );
+  }
+
   // Each <a class="rep-mailto"> starts with a plain mailto:email href
   // (so right-click → copy email, and JS-disabled users still get a
-  // working email link). On load, JS rewrites the href to add a
-  // role-appropriate subject and body, properly URL-encoded.
+  // working email link). On load, JS rewrites the href to add subject and body.
   document.querySelectorAll(".rep-mailto").forEach((a) => {
     const original = a.getAttribute("href") || "";
     if (!original.startsWith("mailto:")) return;
     const email = original.slice("mailto:".length).split("?")[0];
     const greeting = a.dataset.greeting || "";
-    const ask = a.dataset.ask || "share my concerns";
     const subject =
-      "Concerned about the Gardner data center (24/7 impacts, diesel air quality, WaterOne, waste heat, zoning)";
-    const body =
-      "Dear " + greeting + ",\n\n" +
-      "I am writing as a resident with serious concerns about the proposed hyperscale data center southeast of Gardner (on the order of 300 acres near 191st Street and South Clare Road). The parcel is surrounded by existing homes.\n\n" +
-      "My biggest worries are what neighbors would live with every day, not one-time photo opportunities. Cooling and security operations would run around the clock, with noise and bright light at night that do not stop for weekends or holidays. Diesel backup generators must be tested on a fixed schedule, and any power outage triggers more runtime. That exhaust is an air-quality and public-health issue: fine particulates and other pollution hit children, older adults, and anyone with asthma, heart, or lung disease especially hard.\n\n" +
-      "Water for the project would come from WaterOne. Beale describes closed-loop cooling today, but operators elsewhere have later shifted to open, water-intensive cooling (for example evaporative towers) when demand grows, unless a development agreement locks in real limits. I want our community protected if daily use or cooling type changes after approval.\n\n" +
-      "These sites also shed enormous waste heat. Our neighbors have been discussing temperature rise and quality-of-life effects across roughly a six-mile radius around a campus this scale, including heat-related stress and other health burdens that come with living next to heavy industrial load.\n\n" +
-      "Finally, approving heavy industrial (M-1) zoning here sets precedent. It makes the next industrial rezoning beside homes or farmland harder to refuse and changes the future of the whole area.\n\n" +
-      "I am asking you to " + ask + ".\n\n" +
-      "Thank you for reading and for your public service.\n\n" +
-      "[Your name]\n" +
-      "[Your address or neighborhood]";
+      "Proposed Beale data center — follow Gardner's plan (Planning Commission May 26, Council June 15)";
+    const body = buildRepMailtoBody(greeting);
     const url =
       "mailto:" + encodeURIComponent(email).replace(/%40/g, "@") +
       "?subject=" + encodeURIComponent(subject) +
