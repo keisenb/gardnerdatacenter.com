@@ -23,6 +23,15 @@
         "Regular City Council meeting. The data center rezoning may or may not be on the agenda; check the official packet before you go. City agendas and minutes: https://www.gardnerkansas.gov/government/city_council/agendas_minutes.php#outer-319",
     },
     {
+      id: "usd231-board-may-11",
+      title: "USD 231 Board of Education meeting",
+      start: "2026-05-11T18:00:00-05:00",
+      durationMinutes: 120,
+      location: "231 E Madison St, Gardner, KS",
+      description:
+        "USD 231 Board of Education. Gardner residents may speak at this meeting. Pre-register by 12pm May 11; walk-ins register before 6pm. https://usd231.community.highbond.com/home/public/requesttospeak/0 Confirm with the district.",
+    },
+    {
       id: "public-meeting-1",
       title: "Beale public information meeting #1 - Gardner data center proposal",
       start: "2026-05-13T19:00:00-05:00",

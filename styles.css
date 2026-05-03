@@ -269,6 +269,15 @@ p { margin: 0 0 1rem; }
 }
 .btn:active { transform: translateY(1px); }
 
+a.btn {
+  text-decoration: none;
+}
+
+.btn-sm {
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+}
+
 .btn-primary {
   background: var(--color-accent);
   color: #fff;
@@ -1649,18 +1658,7 @@ sup.cite a:hover { border-color: currentColor; }
 .next-step p { margin: 0; color: var(--color-text-muted); font-size: 0.97rem; }
 .next-step a.next-step-link {
   margin-top: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.7rem 1.1rem;
-  background: var(--color-accent);
-  color: #fff;
-  font-weight: 700;
-  border-radius: var(--radius-sm);
-  font-size: 0.95rem;
-  transition: background 0.15s ease;
 }
-.next-step a.next-step-link:hover { background: var(--color-accent-hover); }
 @media (min-width: 640px) {
   .next-step {
     flex-direction: row;
@@ -1841,11 +1839,28 @@ sup.cite a:hover { border-color: currentColor; }
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
-.timeline-actions a {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  border-bottom: 1px solid currentColor;
+.meetings-schedule .timeline-actions-primary {
+  flex-direction: column;
+  align-items: stretch;
+}
+.meetings-schedule .timeline-actions-primary .btn {
+  justify-content: center;
+  white-space: normal;
+  text-align: center;
+}
+@media (min-width: 520px) {
+  .meetings-schedule .timeline-actions-primary {
+    align-items: flex-start;
+  }
+  .meetings-schedule .timeline-actions-primary .btn {
+    justify-content: center;
+  }
+}
+.meetings-schedule .timeline-actions-primary + .timeline-calendar-actions {
+  margin-top: 0.85rem;
+}
+.meetings-schedule .timeline-calendar-actions {
+  flex-wrap: wrap;
 }
 
 /* Concern detail blocks (long form) ------------------------ */
