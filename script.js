@@ -9,6 +9,99 @@
     name: "Say No to the Gardner Data Center",
   };
 
+  let metaOutboundClicksWired = false;
+
+  // =========================================================
+  // Meta Pixel — standard events (guarded; no PII in params)
+  // =========================================================
+  function sanitizeMetaParams(params) {
+    if (!params || typeof params !== "object") return undefined;
+    const out = {};
+    for (const [k, v] of Object.entries(params)) {
+      if (typeof k !== "string") continue;
+      if (!/^[a-z][a-z0-9_]*$/i.test(k)) continue;
+      if (typeof v === "string") {
+        const t = v.trim().slice(0, 100);
+        if (t) out[k] = t;
+      } else if (typeof v === "number" && Number.isFinite(v)) {
+        out[k] = v;
+      }
+    }
+    return Object.keys(out).length ? out : undefined;
+  }
+
+  function trackMeta(eventName, params) {
+    if (typeof window.fbq !== "function") return;
+    const clean = sanitizeMetaParams(params);
+    if (clean) window.fbq("track", eventName, clean);
+    else window.fbq("track", eventName);
+  }
+
+  function mailtoDomainBucket(href) {
+    try {
+      const raw = decodeURIComponent(
+        href.slice(7).split(/[?&#]/)[0] || ""
+      );
+      const i = raw.indexOf("@");
+      if (i === -1) return "email";
+      let domain = raw.slice(i + 1).toLowerCase();
+      domain = domain.replace(/[^a-z0-9.-]/g, "");
+      return domain || "email";
+    } catch (_e) {
+      return "email";
+    }
+  }
+
+  function wireMetaPixelOutboundClicks() {
+    if (metaOutboundClicksWired) return;
+    metaOutboundClicksWired = true;
+
+    document.addEventListener(
+      "click",
+      (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+        const t = e.target;
+        if (!(t instanceof Element)) return;
+        const a = t.closest("a[href]");
+        if (!(a instanceof HTMLAnchorElement)) return;
+        const href = (a.getAttribute("href") || "").trim();
+        if (!href || href.startsWith("#")) return;
+
+        const h = href.toLowerCase();
+
+        if (h.includes("paypal.com/donate") || /paypal\.com.*hosted_button_id/i.test(href)) {
+          trackMeta("Donate", { currency: "USD" });
+          return;
+        }
+        if (h.includes("change.org")) {
+          trackMeta("Lead", {
+            content_name: "change_org_petition",
+            content_category: "advocacy",
+          });
+          return;
+        }
+        if (h.includes("highbond.com") && h.includes("requesttospeak")) {
+          trackMeta("Lead", {
+            content_name: "usd231_request_to_speak",
+            content_category: "public_comment",
+          });
+          return;
+        }
+        if (h.startsWith("mailto:")) {
+          trackMeta("Contact", {
+            content_category: "email",
+            content_name: mailtoDomainBucket(href),
+          });
+          return;
+        }
+        if (h.startsWith("tel:")) {
+          trackMeta("Contact", { content_category: "phone" });
+        }
+      },
+      true
+    );
+  }
+
   // Key dates / meetings. Ordered by date.
   // Update whenever a meeting is added or moved. Times: America/Chicago (Gardner, KS).
   // Titles & descriptions feed .ics + Google Calendar — keep wording specific to this site.
@@ -252,10 +345,20 @@
   function wireIcsAndGcalLinks() {
     const byId = Object.fromEntries(MEETINGS.map((m) => [m.id, m]));
     document.querySelectorAll("[data-gcal]").forEach((el) => {
-      const m = byId[el.getAttribute("data-gcal") || ""];
+      const id = el.getAttribute("data-gcal") || "";
+      const m = byId[id];
       if (!m) return;
       if (el instanceof HTMLAnchorElement) {
         el.href = googleCalendarUrl(m);
+      }
+      if (el instanceof HTMLElement && el.dataset.gcalTracked !== "true") {
+        el.dataset.gcalTracked = "true";
+        el.addEventListener("click", () => {
+          trackMeta("Schedule", {
+            content_name: id,
+            content_category: "meeting_calendar",
+          });
+        });
       }
     });
     document.querySelectorAll("[data-ics]").forEach((el) => {
@@ -267,6 +370,10 @@
       el.dataset.icsWired = "true";
       el.addEventListener("click", (e) => {
         e.preventDefault();
+        trackMeta("Schedule", {
+          content_name: id,
+          content_category: "meeting_calendar",
+        });
         downloadIcs(m);
       });
     });
@@ -287,10 +394,12 @@
     document.addEventListener("DOMContentLoaded", () => {
       buildBanner();
       wireIcsAndGcalLinks();
+      wireMetaPixelOutboundClicks();
     });
   } else {
     buildBanner();
     wireIcsAndGcalLinks();
+    wireMetaPixelOutboundClicks();
   }
 
   // =========================================================
