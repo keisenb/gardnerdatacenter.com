@@ -69,6 +69,13 @@
 
         const h = href.toLowerCase();
 
+        if (h.includes("paypal.com/ncp/payment")) {
+          trackMeta("InitiateCheckout", {
+            content_name: "yard_signs",
+            currency: "USD",
+          });
+          return;
+        }
         if (h.includes("paypal.com/donate") || /paypal\.com.*hosted_button_id/i.test(href)) {
           trackMeta("Donate", { currency: "USD" });
           return;
@@ -238,6 +245,30 @@
     }
   }
 
+  function formatMeetingCalloutParts(iso) {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) {
+      return { weekdayShort: "—", monthDay: "", time: "" };
+    }
+    const tz = "America/Chicago";
+    const wdOpts = { weekday: "short", timeZone: tz };
+    const mdOpts = { month: "short", day: "numeric", timeZone: tz };
+    const tmOpts = {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: tz,
+    };
+    try {
+      return {
+        weekdayShort: new Intl.DateTimeFormat("en-US", wdOpts).format(d),
+        monthDay: new Intl.DateTimeFormat("en-US", mdOpts).format(d),
+        time: new Intl.DateTimeFormat("en-US", tmOpts).format(d),
+      };
+    } catch (_e) {
+      return { weekdayShort: "—", monthDay: "", time: "" };
+    }
+  }
+
   function buildCalendarDescription(meeting) {
     return (
       (meeting.description || "").trim() +
@@ -342,6 +373,85 @@
       .replace(/"/g, "&quot;");
   }
 
+  function hydrateTakeActionMeetingCallout() {
+    const root = document.getElementById("nextMeetingCallout");
+    if (!root) return;
+    const m = nextMeeting();
+    if (!m) return;
+    const parts = formatMeetingCalloutParts(m.start);
+    const mapsQ = encodeURIComponent(
+      (m.location || "Gardner City Hall, Gardner, KS").trim()
+    );
+    const endMs =
+      new Date(m.start).getTime() +
+      (m.durationMinutes || 60) * 60 * 1000;
+    const eventPast = Date.now() > endMs;
+    const label = eventPast ? "Recent meeting" : "Next meeting";
+    const whereHtml = eventPast
+      ? 'This date has passed. <a href="meetings.html#meetings">View the full schedule</a> for updates.'
+      : escapeHtml(m.location || "") +
+        " — confirm agenda for data center items";
+    const actionsHtml = eventPast
+      ? ""
+      : '<div class="meeting-callout-actions">' +
+        '<button type="button" class="btn btn-primary" data-ics="' +
+        escapeHtml(m.id) +
+        '">Apple Calendar</button>' +
+        '<a class="btn btn-ghost" href="#" data-gcal="' +
+        escapeHtml(m.id) +
+        '" target="_blank" rel="noopener">Google Calendar</a>' +
+        '<a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=' +
+        mapsQ +
+        '" target="_blank" rel="noopener">Get directions</a>' +
+        "</div>";
+    root.innerHTML =
+      '<div class="meeting-callout-date">' +
+      '<span class="meeting-callout-day">' +
+      escapeHtml(parts.weekdayShort) +
+      "</span>" +
+      '<span class="meeting-callout-num">' +
+      escapeHtml(parts.monthDay) +
+      "</span>" +
+      '<span class="meeting-callout-time">' +
+      escapeHtml(parts.time) +
+      "</span>" +
+      "</div>" +
+      '<div class="meeting-callout-body">' +
+      '<span class="meeting-callout-label">' +
+      escapeHtml(label) +
+      "</span>" +
+      "<h3>" +
+      escapeHtml(m.title) +
+      "</h3>" +
+      '<p class="meeting-callout-where">' +
+      whereHtml +
+      "</p>" +
+      actionsHtml +
+      "</div>";
+  }
+
+  function hydrateMeetingsTimelinePastState() {
+    const items = document.querySelectorAll(
+      ".meetings-schedule .timeline .timeline-item"
+    );
+    if (!items.length) return;
+    const byId = Object.fromEntries(MEETINGS.map((m) => [m.id, m]));
+    const now = Date.now();
+    items.forEach((li) => {
+      const calEl = li.querySelector("[data-ics]");
+      if (!calEl) return;
+      const id = calEl.getAttribute("data-ics") || "";
+      const m = byId[id];
+      if (!m) return;
+      const endMs =
+        new Date(m.start).getTime() +
+        (m.durationMinutes || 60) * 60 * 1000;
+      const past = now > endMs;
+      li.classList.remove("is-past", "is-upcoming");
+      li.classList.add(past ? "is-past" : "is-upcoming");
+    });
+  }
+
   function wireIcsAndGcalLinks() {
     const byId = Object.fromEntries(MEETINGS.map((m) => [m.id, m]));
     document.querySelectorAll("[data-gcal]").forEach((el) => {
@@ -392,11 +502,15 @@
   // Run chrome immediately so it appears as soon as DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
+      hydrateTakeActionMeetingCallout();
+      hydrateMeetingsTimelinePastState();
       buildBanner();
       wireIcsAndGcalLinks();
       wireMetaPixelOutboundClicks();
     });
   } else {
+    hydrateTakeActionMeetingCallout();
+    hydrateMeetingsTimelinePastState();
     buildBanner();
     wireIcsAndGcalLinks();
     wireMetaPixelOutboundClicks();

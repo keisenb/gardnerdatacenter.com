@@ -1824,6 +1824,9 @@ sup.cite a:hover { border-color: currentColor; }
   margin-bottom: 0.25rem;
 }
 .timeline-item.is-upcoming .timeline-date { color: var(--color-accent); }
+.timeline-item.is-past .timeline-title {
+  color: var(--color-text-muted);
+}
 .timeline-title {
   font-size: 1.05rem;
   font-weight: 700;
@@ -1861,6 +1864,9 @@ sup.cite a:hover { border-color: currentColor; }
 }
 .meetings-schedule .timeline-calendar-actions {
   flex-wrap: wrap;
+}
+.meetings-schedule .timeline-item.is-past .timeline-calendar-actions {
+  display: none;
 }
 
 /* Concern detail blocks (long form) ------------------------ */
