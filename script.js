@@ -132,25 +132,6 @@
         "USD 231 Board of Education. Gardner residents may speak at this meeting. Pre-register by 12pm May 11; walk-ins register before 6pm. https://usd231.community.highbond.com/home/public/requesttospeak/0 Confirm with the district.",
     },
     {
-      id: "public-meeting-1",
-      title: "Beale public information meeting #1 - Gardner data center proposal",
-      start: "2026-05-13T19:00:00-05:00",
-      durationMinutes: 90,
-      location:
-        "Wheatridge Middle School, Gardner, KS",
-      description:
-        "Hosted by Beale Infrastructure. Information on the proposal with Q&A at the end. In person at Wheatridge Middle School. Calendar entry from Say No to the Gardner Data Center (gardnerdatacenter.com) for neighbor planning only; confirm details with the host.",
-    },
-    {
-      id: "public-meeting-2",
-      title: "Beale public information meeting #2 - Gardner data center proposal (virtual)",
-      start: "2026-05-15T10:00:00-05:00",
-      durationMinutes: 90,
-      location: "Virtual (details to be announced)",
-      description:
-        "Hosted by Beale Infrastructure. Second information session, virtual. Details not yet provided. Q&A at the end. Entry from Say No to the Gardner Data Center; confirm with the host when available.",
-    },
-    {
       id: "city-council-may-18",
       title: "Gardner City Council (regular meeting)",
       start: "2026-05-18T19:00:00-05:00",
@@ -166,7 +147,7 @@
       durationMinutes: 120,
       location: "Gardner City Hall",
       description:
-        "Planning Commission hearing on the rezoning application. Public comment becomes part of the official record. Calendar details from gardnerdatacenter.com (community volunteers). Confirm time and place with the City of Gardner.",
+        "Had been listed while the rezoning was active. After Beale Infrastructure withdrew from Gardner (City incentives removed), this item may be dropped — confirm Gardner's Planning Commission agenda. Calendar stub from gardnerdatacenter.com (community archive).",
     },
     {
       id: "council-vote",
@@ -175,7 +156,7 @@
       durationMinutes: 120,
       location: "Gardner City Hall, Gardner, KS 66030",
       description:
-        "City Council vote on the rezoning application. Final decision-making meeting. Listing from Say No to the Gardner Data Center for neighbor planning only; the City agenda is the official source.",
+        "Had been listed as a possible Council vote on rezoning. After Beale withdrew, confirm whether this item remains on the agenda. City agenda is the official source. Listing from gardnerdatacenter.com (community archive).",
     },
   ];
 
@@ -196,20 +177,17 @@
     const slot = document.getElementById("urgentBanner");
     if (!slot) return;
 
-    const next = nextMeeting();
-    if (!next) return;
-
-    const dateStr = formatDateShort(next.start);
     const wrap = document.createElement("div");
     wrap.className = "urgent-banner-inner";
     wrap.innerHTML =
       '<span class="urgent-banner-text">' +
-      '<span class="urgent-banner-label">Next meeting</span>' +
+      '<span class="urgent-banner-label">Project update</span>' +
       '<span class="urgent-banner-message">' +
-      escapeHtml(dateStr) +
-      '</span>' +
+      "Beale Infrastructure withdrew from Gardner after the City removed project incentives. " +
+      "This site stays up as a public reference." +
+      "</span>" +
       '<span class="urgent-banner-sep" aria-hidden="true">·</span>' +
-      '<a href="meetings.html#meetings" class="urgent-banner-link">Learn more</a>' +
+      '<a href="the-proposal.html" class="urgent-banner-link">What was proposed</a>' +
       "</span>";
     slot.appendChild(wrap);
 
@@ -217,56 +195,6 @@
       syncUrgentBannerOffset();
     });
     window.addEventListener("resize", syncUrgentBannerOffset, { passive: true });
-  }
-
-  function nextMeeting() {
-    const now = Date.now();
-    return (
-      MEETINGS.find((m) => new Date(m.start).getTime() > now) ||
-      MEETINGS[MEETINGS.length - 1]
-    );
-  }
-
-  function formatDateShort(iso) {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return iso;
-    const opts = {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "America/Chicago",
-    };
-    try {
-      return new Intl.DateTimeFormat("en-US", opts).format(d);
-    } catch (_e) {
-      return d.toLocaleString();
-    }
-  }
-
-  function formatMeetingCalloutParts(iso) {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) {
-      return { weekdayShort: "—", monthDay: "", time: "" };
-    }
-    const tz = "America/Chicago";
-    const wdOpts = { weekday: "short", timeZone: tz };
-    const mdOpts = { month: "short", day: "numeric", timeZone: tz };
-    const tmOpts = {
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: tz,
-    };
-    try {
-      return {
-        weekdayShort: new Intl.DateTimeFormat("en-US", wdOpts).format(d),
-        monthDay: new Intl.DateTimeFormat("en-US", mdOpts).format(d),
-        time: new Intl.DateTimeFormat("en-US", tmOpts).format(d),
-      };
-    } catch (_e) {
-      return { weekdayShort: "—", monthDay: "", time: "" };
-    }
   }
 
   function buildCalendarDescription(meeting) {
@@ -278,9 +206,9 @@
       SITE.url +
       "\nMeetings: " +
       SITE.url +
-      "/meetings\nTake action: " +
+      "/meetings\nResources: " +
       SITE.url +
-      "/take-action.html"
+      "/resources"
     );
   }
 
@@ -365,68 +293,16 @@
       .replace(/,/g, "\\,")
       .replace(/;/g, "\\;");
   }
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-
   function hydrateTakeActionMeetingCallout() {
     const root = document.getElementById("nextMeetingCallout");
     if (!root) return;
-    const m = nextMeeting();
-    if (!m) return;
-    const parts = formatMeetingCalloutParts(m.start);
-    const mapsQ = encodeURIComponent(
-      (m.location || "Gardner City Hall, Gardner, KS").trim()
-    );
-    const endMs =
-      new Date(m.start).getTime() +
-      (m.durationMinutes || 60) * 60 * 1000;
-    const eventPast = Date.now() > endMs;
-    const label = eventPast ? "Recent meeting" : "Next meeting";
-    const whereHtml = eventPast
-      ? 'This date has passed. <a href="meetings.html#meetings">View the full schedule</a> for updates.'
-      : escapeHtml(m.location || "") +
-        " — confirm agenda for data center items";
-    const actionsHtml = eventPast
-      ? ""
-      : '<div class="meeting-callout-actions">' +
-        '<button type="button" class="btn btn-primary" data-ics="' +
-        escapeHtml(m.id) +
-        '">Apple Calendar</button>' +
-        '<a class="btn btn-ghost" href="#" data-gcal="' +
-        escapeHtml(m.id) +
-        '" target="_blank" rel="noopener">Google Calendar</a>' +
-        '<a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=' +
-        mapsQ +
-        '" target="_blank" rel="noopener">Get directions</a>' +
-        "</div>";
     root.innerHTML =
-      '<div class="meeting-callout-date">' +
-      '<span class="meeting-callout-day">' +
-      escapeHtml(parts.weekdayShort) +
-      "</span>" +
-      '<span class="meeting-callout-num">' +
-      escapeHtml(parts.monthDay) +
-      "</span>" +
-      '<span class="meeting-callout-time">' +
-      escapeHtml(parts.time) +
-      "</span>" +
-      "</div>" +
-      '<div class="meeting-callout-body">' +
-      '<span class="meeting-callout-label">' +
-      escapeHtml(label) +
-      "</span>" +
-      "<h3>" +
-      escapeHtml(m.title) +
-      "</h3>" +
-      '<p class="meeting-callout-where">' +
-      whereHtml +
-      "</p>" +
-      actionsHtml +
+      '<div class="meeting-callout-body meeting-callout-body--archive">' +
+      '<span class="meeting-callout-label">City meetings</span>' +
+      "<h3>Gardner may still hold meetings on other topics</h3>" +
+      '<p class="meeting-callout-where">The developer-led outreach for this rezoning ended when Beale withdrew. ' +
+      "Check the City's published agendas if you follow local meetings for other matters. " +
+      '<a href="meetings.html#meetings">Meeting schedule page</a> lists dates that had been circulated during the debate.</p>' +
       "</div>";
   }
 
@@ -575,7 +451,7 @@
           e.preventDefault();
           await navigator.share({
             title: document.title,
-            text: "Public information about the proposed Gardner data center.",
+            text: "Archived public information about the Gardner data center debate.",
             url: window.location.href,
           });
           return;
@@ -608,26 +484,11 @@
         : "Dear Mayor / Council Member / Commissioner,\n\n";
     return (
       salutation +
-      "My name is [Your Name] and I live at [Your Address]. I'm writing about the proposed Beale Infrastructure data center at 191st Street and South Clare Road, which comes before the Planning Commission on May 26 and the City Council on June 15.\n\n" +
-      "I'm not asking you to reject growth. I'm asking you to follow Gardner's own plan.\n\n" +
-      "When the City annexed the 300-acre parcel under Ordinance 2739, the boundary was deliberately drawn to bring in the agricultural land while excluding the homes that surround it on three sides. The seller and the developer are now inside Gardner. The neighbors who will live with the noise, traffic, lights, water draw, and diesel exhaust are not. They have no vote in the decision before you.\n\n" +
-      "A few months ago, this Planning Commission voted no on a rezoning along 199th Street west of Gardner Road because of traffic and compatibility concerns. That was the right call. The same reasoning applies here at much greater magnitude.\n\n" +
-      "The City's own adopted I-35 & 175th Street Subarea Plan does not even cover this site — its southern boundary stops half a mile north of W. 183rd Street. And inside the area the Plan does cover, the language is explicit: compatibility \"shall\" be accomplished by transition of uses, with low-intensity industrial along the perimeter adjacent to less intensive uses. A 300-acre hyperscale data center directly adjacent to existing homes, with no transition zone, is the opposite of what Gardner's adopted policy requires.\n\n" +
-      "I would also urge you to look closely at who is asking you to override that policy.\n\n" +
-      "Beale Infrastructure was formed in August 2024 as the build-to-suit arm of Blue Owl Capital. Blue Owl's stock has fallen 68% in the past 16 months. Its private credit funds faced $5.4 billion in withdrawal requests last quarter. It walked away from a $10 billion committed Oracle data center deal in Michigan in December, citing local politics. The company that immediately preceded Beale — same team, same address, same money — paid an $11.5 million federal sanctions penalty in December for four years of dealings with a sanctioned Russian oligarch. Beale's sister company is currently a defendant in a $2 billion racketeering lawsuit, and a senior Blue Owl executive is named personally.\n\n" +
-      "In its first 18 months, Beale has been rejected, sued, or forced to withdraw in Tucson, Marana, Coweta Oklahoma, and St. Charles Missouri. There is no community where Beale has won a contested approval without litigation, withdrawal, or a referendum challenge.\n\n" +
-      "I'm asking you to do three things:\n" +
-      "Apply the same standard the Planning Commission applied at 199th and Gardner Road.\n" +
-      "Enforce the Subarea Plan the City adopted.\n" +
-      "Decline to schedule any rezoning vote until the end-tenant is publicly disclosed, the Large Load Power Service tariff terms are on the public record, and the residents excluded from Ordinance 2739 are heard.\n\n" +
-      "This is not about being anti-growth. It's about Gardner growing the way Gardner said it would grow.\n\n" +
-      "Please follow your plan.\n\n" +
-      "Thank you for your time and for your service to our community.\n\n" +
+      "My name is [Your Name] and I live at [Your Address]. I'm writing regarding the Gardner data center proposal that had been marketed for land southeast of town.\n\n" +
+      "[Add your question or comment here — for example, how the City will approach incentives or compatible land use if another developer appears.]\n\n" +
+      "Thank you for your time and service.\n\n" +
       "Respectfully,\n" +
-      "[Your Name]\n" +
-      "[Your Address]\n" +
-      "[Your Phone]\n" +
-      "[Your Email]"
+      "[Your Name]"
     );
   }
 
@@ -639,8 +500,7 @@
     if (!original.startsWith("mailto:")) return;
     const email = original.slice("mailto:".length).split("?")[0];
     const greeting = a.dataset.greeting || "";
-    const subject =
-      "Proposed Beale data center — follow Gardner's plan (Planning Commission May 26, Council June 15)";
+    const subject = "Gardner data center proposal — question for elected officials";
     const body = buildRepMailtoBody(greeting);
     const url =
       "mailto:" + encodeURIComponent(email).replace(/%40/g, "@") +

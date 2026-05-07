@@ -1,6 +1,6 @@
 # Say No to the Gardner Data Center
 
-A simple, fast, mobile-first static website with public information about the proposed industrial-scale data center near Gardner, Kansas. Built so that any community member can quickly learn the facts and take action.
+A simple, fast, mobile-first static website with **archived** public information about the industrial-scale **data center debate** near Gardner, Kansas. **Beale Infrastructure withdrew** after the City removed project incentives; the site remains so anyone can still read **what was proposed** and **why neighbors cared** about water, power, noise, and zoning.
 
 This is a community project. It is **not** affiliated with any government agency or developer.
 
@@ -9,7 +9,7 @@ This is a community project. It is **not** affiliated with any government agency
 Intentionally simple — no build step, no framework, no dependencies.
 
 - Plain **HTML**, **CSS**, and a small bit of vanilla **JavaScript**
-- Google Fonts (Inter + Fraunces) over the network
+- Google Fonts (Inter) over the network
 - Statically hosted on **Vercel** (free tier)
 - Source on **GitHub**
 
@@ -37,11 +37,11 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ├── the-proposal.html       # One-page proposal: plain-language rundown + impacts + sources
 ├── meetings.html           # Public meetings list with .ics / Google Calendar links
 ├── myths.html              # Myths & facts
-├── take-action.html        # Three steps: sign petition, email reps, attend meeting
+├── take-action.html        # Archive: withdrawal note, historical petition link, pointers
 ├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
 ├── resources.html          # Local docs, regulators, other community fights, reporting
 ├── styles.css              # Mobile-first stylesheet
-├── script.js               # Nav, banner, sticky CTA, .ics downloads, mailto helper
+├── script.js               # Nav, status banner, .ics downloads, mailto helper
 ├── logo.png                # M-1 brand mark
 ├── sitemap.xml             # SEO sitemap
 ├── robots.txt              # SEO robots
@@ -55,7 +55,7 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. If you change the nav (or footer links), update every page. Search for `BEGIN SHARED` to find all occurrences quickly.
 
-The **next-meeting banner** and **sticky "Take Action" CTA** are injected by `script.js` — no HTML edits needed when meetings change.
+The **top banner** shows a short **project-status** message (developer withdrawal) and is filled by `script.js` — edit the text in `buildBanner()` in `script.js` if the situation changes.
 
 ## Updating meeting dates
 
@@ -64,7 +64,7 @@ All meetings live in a single `MEETINGS` array near the top of `script.js`. Each
 1. Edit the `MEETINGS` array in `script.js`.
 2. (Optional) Reflect the change on `meetings.html`, which renders meeting entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Apple Calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
 
-The top banner automatically picks the soonest upcoming meeting.
+The top banner does **not** list the next meeting anymore; it summarizes that the prior developer withdrew.
 
 ## Deploying to Vercel
 
@@ -94,7 +94,7 @@ All copy lives in `index.html` and is grouped by `<section>`. To update:
 - **The Proposal** — `the-proposal.html`: merged flow (site, power, water, diesel/air, noise, roads, etc.) with reality-check callouts and footnotes; section anchors include `id="impacts"`, `id="power"`, `id="air"`.
 - **Myths vs Facts** — search for `id="facts"`. Each row is a `<article class="myth-card">`.
 - **Resources** — search for `id="resources"`. Each link is a `<a class="resource-card">`.
-- **Take Action** — search for `id="action"`.
+- **Archive** (`take-action.html`) — historical pointers: petition, meetings, representatives.
 
 Colors, spacing, and typography are controlled by CSS custom properties at the top of `styles.css` under `:root`.
 
