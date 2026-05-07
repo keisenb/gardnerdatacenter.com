@@ -181,13 +181,10 @@
     wrap.className = "urgent-banner-inner";
     wrap.innerHTML =
       '<span class="urgent-banner-text">' +
-      '<span class="urgent-banner-label">Project update</span>' +
+      '<span class="urgent-banner-label">Update</span>' +
       '<span class="urgent-banner-message">' +
-      "Beale Infrastructure withdrew from Gardner after the City removed project incentives. " +
-      "This site stays up as a public reference." +
+      "Beale Infrastructure withdrew from Gardner after the City removed project incentives." +
       "</span>" +
-      '<span class="urgent-banner-sep" aria-hidden="true">·</span>' +
-      '<a href="the-proposal.html" class="urgent-banner-link">What was proposed</a>' +
       "</span>";
     slot.appendChild(wrap);
 

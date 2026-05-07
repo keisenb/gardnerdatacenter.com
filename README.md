@@ -55,7 +55,7 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. If you change the nav (or footer links), update every page. Search for `BEGIN SHARED` to find all occurrences quickly.
 
-The **top banner** shows a short **project-status** message (developer withdrawal) and is filled by `script.js` — edit the text in `buildBanner()` in `script.js` if the situation changes.
+The **top banner** shows a brief **Update** line (withdrawal plus incentives) from `buildBanner()` in `script.js`.
 
 ## Updating meeting dates
 
