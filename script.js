@@ -204,7 +204,7 @@
         "</span>" +
         "</span>"
       : '<span class="urgent-banner-text">' +
-        '<a class="urgent-banner-link" href="meetings.html">Attend The Planning Commission Hearing On Dec 15th</a>' +
+        '<a class="urgent-banner-link" href="take-action.html#dec15">Attend The Planning Commission Hearing On Dec 15th</a>' +
         "</span>";
     slot.appendChild(wrap);
 
@@ -223,7 +223,7 @@
       SITE.url +
       "\nMeetings: " +
       SITE.url +
-      "/meetings\nResources: " +
+      "/take-action\nResources: " +
       SITE.url +
       "/resources"
     );
@@ -272,7 +272,7 @@
       "SUMMARY:" + icsEscape(meeting.title),
       "LOCATION:" + icsEscape(meeting.location || ""),
       "DESCRIPTION:" + icsEscape(buildCalendarDescription(meeting)),
-      "URL:" + SITE.url + "/meetings",
+      "URL:" + SITE.url + "/take-action",
       "END:VEVENT",
       "END:VCALENDAR",
     ];

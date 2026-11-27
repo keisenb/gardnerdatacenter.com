@@ -36,8 +36,7 @@ Then visit `http://localhost:8000` (or the port your server prints).
 ```
 .
 ├── index.html                      # Home — Case 26-303-02
-├── meetings.html                   # Dec 15, 2026 Planning Commission hearing
-├── take-action.html                # Get Involved
+├── take-action.html                # Get Involved, including the Dec 15 hearing
 ├── representatives.html            # Mayor / Council / Planning Commission / County Commissioner
 ├── archive.html                    # May 2026 archive hub
 ├── archive-home-2026-05.html       # May 2026 homepage
@@ -58,7 +57,7 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 ## Maintaining shared chrome across pages
 
-The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. Current pages use Home, Meetings, Get Involved, and Representatives. Archive is only a footer link, and it opens the earlier site (`archive-home-2026-05.html`), which keeps the old navigation.
+The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. Current pages use Home, Get Involved, and Contact Your Reps. Archive is only a footer link, and it opens the earlier site (`archive-home-2026-05.html`), which keeps the old navigation. `/meetings` redirects to Get Involved.
 
 The **top banner** is built by `buildBanner()` in `script.js`. On current pages it is a short link to the December 15 hearing. Pages with `is-legacy-site` keep the earlier banner.
 
@@ -67,7 +66,7 @@ The **top banner** is built by `buildBanner()` in `script.js`. On current pages 
 All meetings live in a single `MEETINGS` array near the top of `script.js`. Each entry needs an `id`, `title`, `start` (ISO 8601 with timezone), `durationMinutes`, `location`, and `description`. Adding or moving a meeting:
 
 1. Edit the `MEETINGS` array in `script.js`.
-2. (Optional) Reflect the change on `meetings.html`, which renders meeting entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Apple Calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
+2. Reflect a current hearing on `take-action.html`. The `data-ics="<id>"` attribute on each calendar link wires up to the `MEETINGS` array. The May 2026 timeline stays on `archive-meetings-2026-05.html`.
 
 The December 15 hearing uses Central Standard Time (`-06:00`). Older May 2026 entries stay in the array so the archive meetings page can still offer calendar files.
 
@@ -97,10 +96,10 @@ vercel --prod # production deploy
 
 ## Editing the content
 
-Current copy lives on `index.html`, `meetings.html`, and `take-action.html`. May 2026 pages are linked from `archive.html`.
+Current copy lives on `index.html` and `take-action.html`. May 2026 pages are linked from the footer Archive.
 
 - **Headlines / hero copy** — `index.html`, `class="hero"`.
-- **Meetings** — `meetings.html`. The May 2026 timeline is `archive-meetings-2026-05.html`.
+- **Dec 15 hearing** — `take-action.html`. The May 2026 timeline is `archive-meetings-2026-05.html`.
 - **Get Involved** — `take-action.html`.
 - **The Proposal, Myths, Resources** — archive pages. Each one starts with the May 2026 notice.
 - **Archive hub** — `archive.html`.

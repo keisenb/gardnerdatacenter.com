@@ -9,8 +9,10 @@
       "destination": "https://www.gardnerdatacenter.com/:path*",
       "permanent": true
     },
-    { "source": "/timeline", "destination": "/meetings", "permanent": true },
-    { "source": "/timeline.html", "destination": "/meetings", "permanent": true },
+    { "source": "/timeline", "destination": "/take-action", "permanent": true },
+    { "source": "/timeline.html", "destination": "/take-action", "permanent": true },
+    { "source": "/meetings", "destination": "/take-action", "permanent": true },
+    { "source": "/meetings.html", "destination": "/take-action", "permanent": true },
     { "source": "/the-project", "destination": "/the-proposal", "permanent": true },
     { "source": "/the-project.html", "destination": "/the-proposal", "permanent": true },
     { "source": "/whats-proposed", "destination": "/the-proposal", "permanent": true },
