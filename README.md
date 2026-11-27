@@ -75,10 +75,6 @@ The December 15 hearing uses Central Standard Time (`-06:00`). Older May 2026 en
 
 `PETITION_URL` near the top of `script.js` is the only place to set a petition URL. Leave it as `""` until one exists. Elements with `data-petition-slot` then stay the static text "Petition coming soon" and are not links. Paste an `https://` URL into `PETITION_URL` to turn every slot into a "Join the petition" link.
 
-## Contact email
-
-The homepage shows the placeholder `{{CONTACT_EMAIL}}` until that text is replaced with a real address.
-
 ## Deploying to Vercel
 
 The site deploys as a pure static site — there is no build step.
