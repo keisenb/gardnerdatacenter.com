@@ -2146,7 +2146,7 @@ body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeli
   .action-grid.help-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 900px) {
-  .action-grid.help-grid { grid-template-columns: 1fr 1fr; }
+  .action-grid.help-grid { grid-template-columns: 1fr 1fr 1fr; }
 }
 
 .archive-jump {
