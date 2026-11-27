@@ -204,7 +204,7 @@
         "</span>" +
         "</span>"
       : '<span class="urgent-banner-text">' +
-        '<a class="urgent-banner-link" href="meetings.html">Dec 15 · 7:00 p.m. · Planning Commission</a>' +
+        '<a class="urgent-banner-link" href="meetings.html">Attend The Planning Commission Hearing On Dec 15th</a>' +
         "</span>";
     slot.appendChild(wrap);
 
