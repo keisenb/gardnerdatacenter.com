@@ -1864,7 +1864,7 @@ sup.cite a:hover { border-color: currentColor; }
 .meetings-schedule .timeline-calendar-actions {
   flex-wrap: wrap;
 }
-.meetings-schedule .timeline-item.is-past .timeline-calendar-actions {
+body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeline-calendar-actions {
   display: none;
 }
 
