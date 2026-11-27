@@ -2111,7 +2111,12 @@ body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeli
 .secondary-actions a:hover { color: var(--color-accent-hover); }
 
 /* Case 26-303-02 ------------------------------------------------ */
+.is-rezoning .hero h1 { max-width: 22em; font-size: clamp(1.7rem, 4.2vw, 2.55rem); }
 .is-rezoning .hero .lede { max-width: 65ch; }
+.ask-grid { grid-template-columns: 1fr; }
+@media (min-width: 700px) {
+  .ask-grid { grid-template-columns: 1fr 1fr; }
+}
 .is-rezoning .hero-cta .btn,
 .action-block .btn {
   white-space: normal;
