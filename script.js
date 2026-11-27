@@ -520,10 +520,11 @@
         : "Dear Mayor / Council Member / Commissioner,\n\n";
     return (
       salutation +
-      "My name is [Your Name] and I live at [Your Address]. I'm writing regarding the Gardner data center proposal that had been marketed for land southeast of town.\n\n" +
-      "[Add your question or comment here — for example, how the City will approach incentives or compatible land use if another developer appears.]\n\n" +
-      "Thank you for your time and service.\n\n" +
-      "Respectfully,\n" +
+      "My name is [Your Name] and I live at [Your Address].\n\n" +
+      "I am writing about the request to rezone 460 acres east of Clare Road to M-1 Industrial. There is no plan for what gets built. A data center could still go there.\n\n" +
+      "Please plan this land before you rezone it. Please also say clearly whether data centers are allowed in Gardner's code for M-1.\n\n" +
+      "[Add anything else you want them to know.]\n\n" +
+      "Thank you,\n" +
       "[Your Name]"
     );
   }
@@ -536,7 +537,7 @@
     if (!original.startsWith("mailto:")) return;
     const email = original.slice("mailto:".length).split("?")[0];
     const greeting = a.dataset.greeting || "";
-    const subject = "Gardner data center proposal — question for elected officials";
+    const subject = "Please plan the 460 acres before rezoning them to M-1";
     const body = buildRepMailtoBody(greeting);
     const url =
       "mailto:" + encodeURIComponent(email).replace(/%40/g, "@") +
