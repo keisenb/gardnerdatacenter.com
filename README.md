@@ -1,6 +1,8 @@
-# Say No to the Gardner Data Center
+# Gardner M-1 Rezoning (Case 26-303-02)
 
-A simple, fast, mobile-first static website with **archived** public information about the industrial-scale **data center debate** near Gardner, Kansas. **Beale Infrastructure withdrew** after the City removed project incentives; the site remains so anyone can still read **what was proposed** and **why neighbors cared** about water, power, noise, and zoning.
+A simple, fast, mobile-first static website about a request to rezone about **460 acres** east of Clare Road, between W 178th St and 191st St, from Johnson County **RUR** to City of Gardner **M-1** (Restricted Industrial). **Case 26-303-02** is a straight M-1 request: no development plan has been submitted with it. The Gardner Planning Commission public hearing is **Tuesday, December 15, 2026, at 7:00 p.m.** at Gardner City Hall.
+
+Pages from the May 2026 data center debate — the old homepage, proposal, myths, resources, and meeting timeline — live under **Archive**. Those pages describe the earlier proposal, which was withdrawn.
 
 This is a community project. It is **not** affiliated with any government agency or developer.
 
@@ -33,38 +35,44 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 ```
 .
-├── index.html              # Home — overview + CTAs into deeper pages
-├── the-proposal.html       # One-page proposal: plain-language rundown + impacts + sources
-├── meetings.html           # Public meetings list with .ics / Google Calendar links
-├── myths.html              # Myths & facts
-├── take-action.html        # Archive: withdrawal note, historical petition link, pointers
-├── representatives.html    # Mayor / Council / Planning Commission / County Commissioner
-├── resources.html          # Local docs, regulators, other community fights, reporting
-├── styles.css              # Mobile-first stylesheet
-├── script.js               # Nav, status banner, .ics downloads, mailto helper
-├── logo.png                # M-1 brand mark
-├── sitemap.xml             # SEO sitemap
-├── robots.txt              # SEO robots
-├── vercel.json             # Static deploy config (clean URLs + cache + security headers)
-├── ATTRIBUTIONS.md         # Logo, photo, and content credits
+├── index.html                      # Home — Case 26-303-02
+├── take-action.html                # Get Involved, including the Dec 15 hearing
+├── representatives.html            # Mayor / Council / Planning Commission / County Commissioner
+├── archive.html                    # May 2026 archive hub
+├── archive-home-2026-05.html       # May 2026 homepage
+├── archive-meetings-2026-05.html   # May–June 2026 meeting timeline
+├── the-proposal.html               # Archive — earlier data center proposal
+├── myths.html                      # Archive — myths and facts
+├── resources.html                  # Archive — documents and reporting
+├── styles.css                      # Mobile-first stylesheet
+├── script.js                       # Nav, hearing banner, petition slot, .ics downloads
+├── logo.png                        # M-1 brand mark
+├── sitemap.xml                     # SEO sitemap
+├── robots.txt                      # SEO robots
+├── vercel.json                     # Static deploy config (clean URLs + cache + security headers)
+├── ATTRIBUTIONS.md                 # Logo, photo, and content credits
 ├── .gitignore
 └── README.md
 ```
 
 ## Maintaining shared chrome across pages
 
-The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. If you change the nav (or footer links), update every page. Search for `BEGIN SHARED` to find all occurrences quickly.
+The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. Current pages use Home, Get Involved, and Contact Your Reps. Archive is only a footer link, and it opens the earlier site (`archive-home-2026-05.html`), which keeps the old navigation. `/meetings` redirects to Get Involved.
 
-The **top banner** shows a brief **Update** line (withdrawal plus incentives) from `buildBanner()` in `script.js`.
+The **top banner** is built by `buildBanner()` in `script.js`. On current pages it is a short link to the December 15 hearing. Pages with `is-legacy-site` keep the earlier banner.
 
 ## Updating meeting dates
 
 All meetings live in a single `MEETINGS` array near the top of `script.js`. Each entry needs an `id`, `title`, `start` (ISO 8601 with timezone), `durationMinutes`, `location`, and `description`. Adding or moving a meeting:
 
 1. Edit the `MEETINGS` array in `script.js`.
-2. (Optional) Reflect the change on `meetings.html`, which renders meeting entries in static HTML for SEO. The `data-ics="<id>"` attribute on each "Apple Calendar" link wires up to the corresponding meeting in the `MEETINGS` array.
+2. Reflect a current hearing on `take-action.html`. The `data-ics="<id>"` attribute on each calendar link wires up to the `MEETINGS` array. The May 2026 timeline stays on `archive-meetings-2026-05.html`.
 
-The top banner does **not** list the next meeting anymore; it summarizes that the prior developer withdrew.
+The December 15 hearing uses Central Standard Time (`-06:00`). Older May 2026 entries stay in the array so the archive meetings page can still offer calendar files.
+
+## Petition link
+
+The resident petition is signed in person. The site points people to the community Facebook group to find a time. The landowner protest petition is a separate step for owners within 1,000 feet of the site.
 
 ## Deploying to Vercel
 
@@ -88,13 +96,13 @@ vercel --prod # production deploy
 
 ## Editing the content
 
-All copy lives in `index.html` and is grouped by `<section>`. To update:
+Current copy lives on `index.html` and `take-action.html`. May 2026 pages are linked from the footer Archive.
 
-- **Headlines / hero copy** — search for `class="hero"`.
-- **The Proposal** — `the-proposal.html`: merged flow (site, power, water, diesel/air, noise, roads, etc.) with reality-check callouts and footnotes; section anchors include `id="impacts"`, `id="power"`, `id="air"`.
-- **Myths vs Facts** — search for `id="facts"`. Each row is a `<article class="myth-card">`.
-- **Resources** — search for `id="resources"`. Each link is a `<a class="resource-card">`.
-- **Archive** (`take-action.html`) — historical pointers: petition, meetings, representatives.
+- **Headlines / hero copy** — `index.html`, `class="hero"`.
+- **Dec 15 hearing** — `take-action.html`. The May 2026 timeline is `archive-meetings-2026-05.html`.
+- **Get Involved** — `take-action.html`.
+- **The Proposal, Myths, Resources** — archive pages. Each one starts with the May 2026 notice.
+- **Archive hub** — `archive.html`.
 
 Colors, spacing, and typography are controlled by CSS custom properties at the top of `styles.css` under `:root`.
 
@@ -104,7 +112,7 @@ Colors, spacing, and typography are controlled by CSS custom properties at the t
 - Sticky, accessible nav with hamburger toggle, ARIA attributes, and Escape-to-close.
 - Skip-to-main-content link.
 - Respects `prefers-reduced-motion`.
-- No JavaScript framework, no tracking, minimal network requests.
+- No JavaScript framework. Plausible analytics and Meta Pixel are included.
 
 ## License
 

@@ -1463,15 +1463,13 @@ a.btn {
 .urgent-banner-text {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 0.35rem 0.45rem;
   min-width: 0;
   max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  text-align: center;
 }
 .urgent-banner-text::-webkit-scrollbar {
   display: none;
@@ -1507,14 +1505,15 @@ a.btn {
   user-select: none;
 }
 .urgent-banner-link {
-  flex-shrink: 0;
+  flex: 1 1 auto;
   font-weight: 600;
   font-size: inherit;
-  line-height: 1.28;
+  line-height: 1.35;
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
+  white-space: normal;
 }
 .urgent-banner-link:hover {
   color: #fff;
@@ -1538,8 +1537,8 @@ a.btn {
     padding: 0.45rem 1.25rem;
   }
   .urgent-banner-text {
-    flex: 0 1 auto;
-    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 0.4rem;
     min-width: 0;
@@ -1865,7 +1864,7 @@ sup.cite a:hover { border-color: currentColor; }
 .meetings-schedule .timeline-calendar-actions {
   flex-wrap: wrap;
 }
-.meetings-schedule .timeline-item.is-past .timeline-calendar-actions {
+body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeline-calendar-actions {
   display: none;
 }
 
@@ -2110,6 +2109,128 @@ sup.cite a:hover { border-color: currentColor; }
 }
 .secondary-actions a { color: var(--color-accent); border-bottom: 1px solid currentColor; }
 .secondary-actions a:hover { color: var(--color-accent-hover); }
+
+/* Case 26-303-02 ------------------------------------------------ */
+.is-rezoning .hero h2 {
+  max-width: 72ch;
+  margin-top: 1.1rem;
+  font-size: clamp(1.05rem, 2vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: normal;
+  color: var(--color-text-muted);
+}
+.m1-why { padding: 3.75rem 0; }
+.m1-why .section-label { font-size: 0.95rem; margin-bottom: 0.85rem; }
+.m1-why-line {
+  margin: 0;
+  max-width: 18em;
+  font-size: clamp(1.65rem, 3.6vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+.ask-grid { grid-template-columns: 1fr; }
+@media (min-width: 700px) {
+  .ask-grid { grid-template-columns: 1fr 1fr; }
+}
+.is-rezoning .hero-cta .btn,
+.action-block .btn {
+  white-space: normal;
+  text-align: center;
+}
+
+.section-title-wide { max-width: min(36ch, 100%); }
+
+.btn-soon {
+  background: var(--color-bg-soft);
+  color: var(--color-text-muted);
+  border-color: var(--color-border-strong);
+  cursor: default;
+  white-space: normal;
+  text-align: center;
+}
+.btn-soon:active { transform: none; }
+
+.archive-banner {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+.archive-banner p { margin: 0; }
+.archive-banner a {
+  color: var(--color-accent);
+  font-weight: 700;
+  border-bottom: 1px solid currentColor;
+}
+
+.help-grid { margin-top: 0.5rem; }
+@media (min-width: 700px) {
+  .action-grid.help-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .action-grid.help-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.archive-jump {
+  margin: 0;
+  font-size: 0.95rem;
+}
+.archive-jump-spaced { margin-top: 2rem; }
+.petition-soon {
+  margin-top: auto;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+.page-note a,
+.action-summary a {
+  color: var(--color-accent);
+  font-weight: 600;
+  border-bottom: 1px solid currentColor;
+}
+.archive-jump a {
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+.archive-jump a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.contact-line {
+  margin: 1.5rem 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.98rem;
+}
+.contact-line a {
+  color: var(--color-text);
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-strong);
+}
+.contact-line a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.hero-when {
+  margin: 0.35rem 0 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+.is-rezoning .hero .lede {
+  margin-bottom: 0.35rem;
+}
+
+.legacy-return {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}
+.legacy-return a {
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+.legacy-return a:hover { color: var(--color-accent); }
+
 
 /* Reduced motion ------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
