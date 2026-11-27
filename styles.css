@@ -2231,33 +2231,6 @@ body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeli
 }
 .legacy-return a:hover { color: var(--color-accent); }
 
-.more-reps { margin: 0; }
-.more-reps > summary {
-  list-style: none;
-  cursor: pointer;
-  width: fit-content;
-  margin: 2.5rem auto 0.5rem;
-}
-.more-reps > summary::-webkit-details-marker { display: none; }
-.more-reps-summary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.85rem 1.4rem;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--color-accent);
-  background: var(--color-accent);
-  color: #fff;
-  font-weight: 700;
-  font-size: 1rem;
-}
-.more-reps > summary:hover .more-reps-summary {
-  background: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-}
-.more-reps .when-open { display: none; }
-.more-reps[open] .when-open { display: inline; }
-.more-reps[open] .when-closed { display: none; }
 
 /* Reduced motion ------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
