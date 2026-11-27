@@ -2190,6 +2190,49 @@ body:not(.is-archive-schedule) .meetings-schedule .timeline-item.is-past .timeli
   border-color: var(--color-accent);
 }
 
+.hero-when {
+  margin: 0.35rem 0 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+.is-rezoning .hero .lede {
+  margin-bottom: 0.35rem;
+}
+
+.legacy-return {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}
+.legacy-return a {
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border-strong);
+}
+.legacy-return a:hover { color: var(--color-accent); }
+
+.more-reps { margin: 0; }
+.more-reps > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.75rem 0 0.5rem;
+}
+.more-reps > summary::-webkit-details-marker { display: none; }
+.more-reps-summary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.1rem;
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+.more-reps > summary:hover .more-reps-summary {
+  background: var(--color-text);
+  color: #fff;
+}
+.more-reps .when-open { display: none; }
+.more-reps[open] .when-open { display: inline; }
+.more-reps[open] .when-closed { display: none; }
+.more-reps[open] > summary { padding-bottom: 0; }
+
 /* Reduced motion ------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -193,15 +193,19 @@
     const slot = document.getElementById("urgentBanner");
     if (!slot) return;
 
+    const legacy = document.body.classList.contains("is-legacy-site");
     const wrap = document.createElement("div");
     wrap.className = "urgent-banner-inner";
-    wrap.innerHTML =
-      '<span class="urgent-banner-text">' +
-      '<span class="urgent-banner-label">Hearing</span>' +
-      '<a class="urgent-banner-link" href="meetings.html">' +
-      "Planning Commission hearing: Tue, Dec 15, 2026 · 7:00 p.m. · Gardner City Hall — Case 26-303-02 (460 acres to M-1)" +
-      "</a>" +
-      "</span>";
+    wrap.innerHTML = legacy
+      ? '<span class="urgent-banner-text">' +
+        '<span class="urgent-banner-label">Update</span>' +
+        '<span class="urgent-banner-message">' +
+        "Beale Infrastructure withdrew from Gardner after the City removed project incentives." +
+        "</span>" +
+        "</span>"
+      : '<span class="urgent-banner-text">' +
+        '<a class="urgent-banner-link" href="meetings.html">Dec 15 · 7:00 p.m. · Planning Commission</a>' +
+        "</span>";
     slot.appendChild(wrap);
 
     requestAnimationFrame(() => {

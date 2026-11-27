@@ -58,9 +58,9 @@ Then visit `http://localhost:8000` (or the port your server prints).
 
 ## Maintaining shared chrome across pages
 
-The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. If you change the nav (or footer links), update every page. Search for `BEGIN SHARED` to find all occurrences quickly.
+The header, urgent banner placeholder (`#urgentBanner`), nav, and footer are **duplicated** in each HTML file between the comments `<!-- BEGIN SHARED CHROME -->` / `<!-- END SHARED CHROME -->` and `<!-- BEGIN SHARED FOOTER -->` / `<!-- END SHARED FOOTER -->`. Current pages use Home, Meetings, Get Involved, and Representatives. Archive is only a footer link, and it opens the earlier site (`archive-home-2026-05.html`), which keeps the old navigation.
 
-The **top banner** is built by `buildBanner()` in `script.js`. It links to the December 15, 2026 Planning Commission hearing.
+The **top banner** is built by `buildBanner()` in `script.js`. On current pages it is a short link to the December 15 hearing. Pages with `is-legacy-site` keep the earlier banner.
 
 ## Updating meeting dates
 
@@ -73,7 +73,7 @@ The December 15 hearing uses Central Standard Time (`-06:00`). Older May 2026 en
 
 ## Petition link
 
-`PETITION_URL` near the top of `script.js` is the only place to set a petition URL. Leave it as `""` until one exists. Elements with `data-petition-slot` then stay the static text "Petition coming soon" and are not links. Paste an `https://` URL into `PETITION_URL` to turn every slot into a "Join the petition" link.
+The resident petition is signed in person. The site points people to the community Facebook group to find a time. The landowner protest petition is a separate step for owners within 1,000 feet of the site.
 
 ## Deploying to Vercel
 
