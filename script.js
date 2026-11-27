@@ -9,6 +9,12 @@
     name: "Say No to the Gardner Data Center",
   };
 
+  // Petition link — the only place to set it.
+  // Leave "" until a URL exists. To turn the petition on, paste one https URL
+  // here. Every [data-petition-slot] then becomes a "Join the petition" link.
+  // While this stays "", those slots keep the static text "Petition coming soon".
+  const PETITION_URL = "";
+
   let metaOutboundClicksWired = false;
 
   // =========================================================
@@ -158,6 +164,16 @@
       description:
         "Had been listed as a possible Council vote on rezoning. After Beale withdrew, confirm whether this item remains on the agenda. City agenda is the official source. Listing from gardnerdatacenter.com (community archive).",
     },
+    {
+      id: "pc-hearing-2026-12-15",
+      title:
+        "Gardner Planning Commission public hearing: Case 26-303-02 (M-1 rezoning)",
+      start: "2026-12-15T19:00:00-06:00",
+      durationMinutes: 120,
+      location: "Gardner City Hall, Gardner, KS",
+      description:
+        "Public hearing on rezoning ~460 acres east of Clare Rd (W 178th–191st) from County RUR to M-1. Public comment is part of the record. Confirm the agenda on the City website.",
+    },
   ];
 
   function syncUrgentBannerOffset() {
@@ -181,10 +197,10 @@
     wrap.className = "urgent-banner-inner";
     wrap.innerHTML =
       '<span class="urgent-banner-text">' +
-      '<span class="urgent-banner-label">Update</span>' +
-      '<span class="urgent-banner-message">' +
-      "Beale Infrastructure withdrew from Gardner after the City removed project incentives." +
-      "</span>" +
+      '<span class="urgent-banner-label">Hearing</span>' +
+      '<a class="urgent-banner-link" href="meetings.html">' +
+      "Planning Commission hearing: Tue, Dec 15, 2026 · 7:00 p.m. · Gardner City Hall — Case 26-303-02 (460 acres to M-1)" +
+      "</a>" +
       "</span>";
     slot.appendChild(wrap);
 
@@ -290,6 +306,23 @@
       .replace(/,/g, "\\,")
       .replace(/;/g, "\\;");
   }
+  function hydratePetitionSlots() {
+    const url = String(PETITION_URL || "").trim();
+    if (!/^https?:\/\//i.test(url) && !url.startsWith("/")) return;
+    document.querySelectorAll("[data-petition-slot]").forEach((el) => {
+      if (!(el instanceof HTMLElement)) return;
+      const a = document.createElement("a");
+      a.href = url;
+      a.className = el.getAttribute("data-petition-class") || "btn btn-primary";
+      a.textContent = el.getAttribute("data-petition-label") || "Join the petition";
+      if (/^https?:\/\//i.test(url)) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+      el.replaceWith(a);
+    });
+  }
+
   function hydrateTakeActionMeetingCallout() {
     const root = document.getElementById("nextMeetingCallout");
     if (!root) return;
@@ -297,9 +330,9 @@
       '<div class="meeting-callout-body meeting-callout-body--archive">' +
       '<span class="meeting-callout-label">City meetings</span>' +
       "<h3>Gardner may still hold meetings on other topics</h3>" +
-      '<p class="meeting-callout-where">The developer-led outreach for this rezoning ended when Beale withdrew. ' +
+      '<p class="meeting-callout-where">The developer-led outreach for that rezoning ended when the developer withdrew. ' +
       "Check the City's published agendas if you follow local meetings for other matters. " +
-      '<a href="meetings.html#meetings">Meeting schedule page</a> lists dates that had been circulated during the debate.</p>' +
+      '<a href="archive-meetings-2026-05.html#meetings">May 2026 meeting schedule</a> lists dates that had been circulated during the debate.</p>' +
       "</div>";
   }
 
@@ -375,6 +408,7 @@
   // Run chrome immediately so it appears as soon as DOM is ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
+      hydratePetitionSlots();
       hydrateTakeActionMeetingCallout();
       hydrateMeetingsTimelinePastState();
       buildBanner();
@@ -382,6 +416,7 @@
       wireMetaPixelOutboundClicks();
     });
   } else {
+    hydratePetitionSlots();
     hydrateTakeActionMeetingCallout();
     hydrateMeetingsTimelinePastState();
     buildBanner();
